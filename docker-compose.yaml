@@ -1,0 +1,11 @@
+services:
+  angular:
+    build: .
+    volumes:
+      - ./soma-sophia:/app
+      - /app/node_modules # Keep node_modules inside container
+    environment:
+      - NODE_ENV=development
+    ports:
+      - 4200:4200
+    command: npm start -- --host 0.0.0.0
