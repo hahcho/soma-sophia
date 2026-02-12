@@ -1,2 +1,5 @@
 soma-sophia/.angular/cache
 soma-sophia/node_modules
+
+# Docker environment variables (user-specific)
+.env

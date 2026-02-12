@@ -1,6 +1,7 @@
 services:
   angular:
     build: .
+    user: "${UID:-1000}:${GID:-1000}"
     volumes:
       - ./soma-sophia:/app
       - /app/node_modules # Keep node_modules inside container
