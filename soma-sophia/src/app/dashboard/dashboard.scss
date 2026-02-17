@@ -1,0 +1,74 @@
+@use 'variables' as *;
+
+// maybe this one should be extracted in styles.css
+h2, h3, ul, li { padding: 0; margin: 0; }
+li { list-style: none; }
+
+h2 { 
+  position: relative;
+  text-transform: uppercase; 
+  margin-bottom: u(4);
+  font-size: u(4);
+  font-weight: $font-bold;
+  display: inline-block;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #0066ff 0%, transparent 100%);
+  }
+}
+
+.set-list {
+  display: flex;
+  flex-direction: column;
+  gap: u(4);
+  margin-bottom: u(4);
+}
+
+$border-definition: u(0.25) solid $color-border-subtle;
+$padding-definition: u(2.5) u(4);
+
+.card {
+  padding: $padding-definition;
+
+  background: $color-bg-surface;
+  border: $border-definition;
+  border-radius: u(3);
+
+  h3 { 
+    font-size: u(3.5);
+    font-weight: $font-semi-bold;
+    line-height: 1.3;
+  }
+
+  .details { 
+    font-family: $font-monospace;
+    font-size: u(3);
+    color: $color-text-secondary;
+    margin-top: u(0.5);
+  }
+}
+
+ul.card {
+  padding: u(0);
+  background-color: $color-bg-surface-pop;
+
+  & > li { padding: $padding-definition; }
+  & > li:not(:last-child) { border-bottom: $border-definition; }
+
+  li.footer {
+    font-family: $font-monospace;
+    font-size: u(2.5);
+    font-weight: $font-semi-bold;
+    letter-spacing: 0.05em;
+    color: $color-text-secondary;
+    background-color: $color-bg-surface-pop-1;
+    text-align: center;
+    border-top: u(0.25) solid $color-bg-surface-pop-2;
+  }
+}

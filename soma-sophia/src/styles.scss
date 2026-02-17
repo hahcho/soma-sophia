@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+html {
+  font-size: u(4);
+  font-family: $font-sans-serif;
+  line-height: 1.2;
+  background-color: $color-bg;
+  color: $color-text-primary;
+}
