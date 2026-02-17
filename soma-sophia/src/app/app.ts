@@ -7,7 +7,6 @@ import { Header } from './header/header'
   selector: 'app-root',
   imports: [RouterOutlet, Dashboard, Header],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
 })
 export class App {
   protected readonly headerText = 'Morning Routine';

@@ -1,0 +1,11 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "rules": {
+    "scss/dollar-variable-pattern": "^[a-z][a-z0-9-]*$",
+    "scss/at-function-pattern": "^[a-z][a-z0-9-]*$",
+    "color-no-invalid-hex": true,
+    "declaration-block-no-duplicate-properties": true,
+    "shorthand-property-no-redundant-values": true,
+    "alpha-value-notation": "number"
+  }
+}
