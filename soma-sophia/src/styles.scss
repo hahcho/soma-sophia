@@ -7,3 +7,10 @@ html {
   background-color: $color-bg;
   color: $color-text-primary;
 }
+
+// Mobile like feel even on desktop
+body {
+  max-width: u(140);
+  margin: 0 auto;
+  padding: u(4);
+}
