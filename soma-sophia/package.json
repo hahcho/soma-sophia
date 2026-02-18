@@ -38,6 +38,7 @@
     "@angular/build": "^21.1.1",
     "@angular/cli": "^21.1.1",
     "@angular/compiler-cli": "^21.1.0",
+    "@angular/language-server": "^21.1.4",
     "jsdom": "^27.1.0",
     "sass": "^1.97.3",
     "stylelint": "^17.3.0",
