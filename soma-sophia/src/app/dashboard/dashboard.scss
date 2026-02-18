@@ -13,9 +13,9 @@ li {
   list-style: none;
 }
 
-h2 { 
+h2 {
   position: relative;
-  text-transform: uppercase; 
+  text-transform: uppercase;
   margin-bottom: u(4);
   font-size: u(4);
   font-weight: $font-bold;
@@ -48,13 +48,13 @@ $padding-definition: u(2.5) u(4);
   border: $border-definition;
   border-radius: u(3);
 
-  h3 { 
+  h3 {
     font-size: u(3.5);
     font-weight: $font-semi-bold;
     line-height: 1.3;
   }
 
-  .details { 
+  .details {
     font-family: $font-monospace;
     font-size: u(3);
     color: $color-text-secondary;
@@ -66,8 +66,13 @@ ul.card {
   padding: u(0);
   background-color: $color-bg-surface-pop;
 
-  & > li { padding: $padding-definition; }
-  & > li:not(:last-child) { border-bottom: $border-definition; }
+  &>li {
+    padding: $padding-definition;
+  }
+
+  &>li:not(:last-child) {
+    border-bottom: $border-definition;
+  }
 
   li.footer {
     font-family: $font-monospace;
