@@ -2,6 +2,7 @@ import {signal, Component} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {FormatSecondsPipe} from '../format-seconds.pipe';
 
+
 type SimpleExercise = {
     kind: 'simple';
     name: string;
@@ -9,13 +10,13 @@ type SimpleExercise = {
 
 type StaticExercise = {
     kind: 'static';
-    name: 'string';
+    name: string;
     holdTime: number;
 }
 
 type DynamicExercise = {
     kind: 'dynamic';
-    name: 'string';
+    name: string;
     repetitions: number;
 }
 
@@ -40,9 +41,33 @@ type Phase = {
     sets: (ExerciseSet | ExerciseSuperSet)[];
 }
 
-type Routine = {name: string; phases: Phase[];};
+class Routine {
+    name: string;
+    phases: Phase[];
 
-const HARDCODED_ROUTINE_JSON = {
+    constructor({name, phases}: {name: string; phases: Phase[]}) {
+        this.name = name;
+        this.phases = phases;
+    }
+
+    approximateTime() {
+        const singleSetApproximateTime = 60;
+        let totalApproximateTime = 0;
+
+        for (let phase of this.phases) {
+            for (let set of phase.sets) {
+                const repetitions = set.repetitions || 0;
+                const restTime = set.restTime || 0;
+                const totalSetTime = (singleSetApproximateTime + restTime) * repetitions;
+                totalApproximateTime += totalSetTime;
+            }
+        }
+
+        return totalApproximateTime;
+    }
+}
+
+const HARDCODED_ROUTINE_JSON: {name: string; phases: Phase[]} = {
     name: 'Morning Routine',
     phases: [
         {
@@ -133,5 +158,5 @@ const HARDCODED_ROUTINE_JSON = {
     styleUrl: './dashboard.scss',
 })
 export class Dashboard {
-    protected readonly routine = signal(HARDCODED_ROUTINE_JSON as Routine);
+    protected readonly routine = signal(new Routine(HARDCODED_ROUTINE_JSON));
 }
