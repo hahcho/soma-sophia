@@ -13,7 +13,14 @@ li {
   list-style: none;
 }
 
-h2 {
+.phase-number {
+  font-family: $font-monospace;
+  font-size: u(3);
+  font-weight: $font-bold;
+  color: $color-tertiary;
+}
+
+h2.phase-name {
   position: relative;
   text-transform: uppercase;
   margin-bottom: u(4);

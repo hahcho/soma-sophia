@@ -1,4 +1,5 @@
-import { signal, Component } from '@angular/core';
+import {signal, Component} from '@angular/core';
+import {DecimalPipe} from '@angular/common';
 
 type SimpleExercise = {
     kind: 'simple';
@@ -125,10 +126,10 @@ const HARDCODED_ROUTINE_JSON = {
 };
 
 @Component({
-  selector: 'ss-dashboard',
-  imports: [],
-  templateUrl: './dashboard.html',
-  styleUrl: './dashboard.scss',
+    selector: 'ss-dashboard',
+    imports: [DecimalPipe],
+    templateUrl: './dashboard.html',
+    styleUrl: './dashboard.scss',
 })
 export class Dashboard {
     protected readonly routine = signal(HARDCODED_ROUTINE_JSON as Routine);

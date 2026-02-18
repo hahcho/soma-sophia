@@ -1,5 +1,8 @@
 @for (phase of routine().phases; track phase.name) {
-    <h2> {{ phase.name }} </h2>
+    <span class="phase-number">
+        {{ $index + 1 | number: '2.0-0' }}
+    </span>
+    <h2 class="phase-name"> {{ phase.name }} </h2>
     <ul class="set-list">
     @for (set of phase.sets; track set) {
         @if (set.kind == 'superset') {
