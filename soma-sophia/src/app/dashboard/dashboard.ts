@@ -1,5 +1,6 @@
 import {signal, Component} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
+import {FormatSecondsPipe} from '../format-seconds.pipe';
 
 type SimpleExercise = {
     kind: 'simple';
@@ -98,7 +99,7 @@ const HARDCODED_ROUTINE_JSON = {
                         holdTime: 30,
                     },
                     repetitions: 3,
-                    restTime: 120,
+                    restTime: 90,
                 },
                 {
                     kind: 'superset',
@@ -127,7 +128,7 @@ const HARDCODED_ROUTINE_JSON = {
 
 @Component({
     selector: 'ss-dashboard',
-    imports: [DecimalPipe],
+    imports: [DecimalPipe, FormatSecondsPipe],
     templateUrl: './dashboard.html',
     styleUrl: './dashboard.scss',
 })

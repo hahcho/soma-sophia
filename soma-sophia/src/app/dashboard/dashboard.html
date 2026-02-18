@@ -15,7 +15,7 @@
                                 @if (exercise.kind == 'dynamic') {
                                     {{ exercise.repetitions }} reps
                                 } @else if (exercise.kind == 'static') {
-                                    {{ exercise.holdTime }}s hold
+                                    {{ exercise.holdTime | formatSeconds }} hold
                                 }
                             </div>
                         </li>
@@ -26,7 +26,7 @@
                             • {{ set.repetitions }} sets
                         }
                         @if (set.restTime) {
-                            • {{ set.restTime }}s rest
+                            • {{ set.restTime | formatSeconds }} rest
                         }
                     </li>
                 </ul>
@@ -41,10 +41,10 @@
                     @if (set.exercise.kind == 'dynamic') {
                         {{ set.exercise.repetitions }} reps
                     } @else if (set.exercise.kind == 'static') {
-                        {{ set.exercise.holdTime }}s hold
+                        {{ set.exercise.holdTime | formatSeconds }} hold
                     }
                     @if (set.restTime) {
-                        • {{ set.restTime }}s rest
+                        • {{ set.restTime | formatSeconds }} rest
                     }
                 </div>
             </li>
