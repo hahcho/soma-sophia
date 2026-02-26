@@ -1,31 +1,7 @@
 @use 'variables' as *;
 
-// maybe this one should be extracted in styles.css
-h1,
-h2,
-h3,
-ul,
-li {
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  list-style: none;
-}
-
 header {
-  background: linear-gradient(180deg, $color-bg-surface 0%, transparent 100%);
-  padding: u(10) u(5) u(6);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(u(5));
-  border-bottom: u(0.25) solid $color-border-subtle;
-
   h1 {
-    font-size: u(7);
-    font-weight: $font-extra-bold;
     background: linear-gradient(135deg, $color-accent-primary 0%, $color-accent-secondary 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -49,10 +25,6 @@ header {
   }
 }
 
-main {
-  padding: u(4) u(5) u(15);
-}
-
 .phase-number {
   font-family: $font-monospace;
   font-size: u(3);
@@ -64,8 +36,6 @@ h2.phase-name {
   position: relative;
   text-transform: uppercase;
   margin-bottom: u(4);
-  font-size: u(4);
-  font-weight: $font-bold;
   display: inline-block;
 
   &::after {
@@ -96,8 +66,6 @@ $padding-definition: u(2.5) u(4);
   border-radius: u(3);
 
   h3 {
-    font-size: u(3.5);
-    font-weight: $font-semi-bold;
     line-height: 1.3;
   }
 

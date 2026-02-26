@@ -20,11 +20,7 @@
                             <li>
                                 <h3> {{ exercise.name }} </h3>
                                 <div class="details">
-                                    @if (exercise.kind == 'dynamic') {
-                                        {{ exercise.repetitions }} reps
-                                    } @else if (exercise.kind == 'static') {
-                                        {{ exercise.holdTime | formatSeconds }} hold
-                                    }
+                                    {{ exercise | exerciseTarget }}
                                 </div>
                             </li>
                         }
@@ -46,11 +42,7 @@
                         @if (set.repetitions) {
                             {{ set.repetitions }} sets ×
                         }
-                        @if (set.exercise.kind == 'dynamic') {
-                            {{ set.exercise.repetitions }} reps
-                        } @else if (set.exercise.kind == 'static') {
-                            {{ set.exercise.holdTime | formatSeconds }} hold
-                        }
+                        {{ set.exercise | exerciseTarget }}
                         @if (set.restTime) {
                             • {{ set.restTime | formatSeconds }} rest
                         }

@@ -139,7 +139,7 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
                         {kind: 'dynamic', name: 'compression work', repetitions: 12}
                     ],
                     repetitions: 3,
-                    restTime: 120,
+                    restTime: 10,
                 },
                 {
                     kind: 'superset',

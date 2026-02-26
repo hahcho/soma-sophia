@@ -1,0 +1,23 @@
+@use 'variables' as *;
+
+.timer {
+  font-family: $font-monospace;
+  font-size: u(18);
+  font-weight: $font-bold;
+  color: $color-accent-primary;
+}
+
+:host(.primary) .timer {
+  color: $color-accent-primary;
+}
+
+:host(.warning) .timer {
+  color: $color-accent-warning;
+}
+
+.timer-label {
+  font-family: $font-monospace;
+  color: $color-text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}

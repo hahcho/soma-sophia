@@ -1,0 +1,34 @@
+<div class="ss-card">
+    <label>
+        Superset
+        @if (superset().repetitions) {
+            • Set {{ ongoingSuperset().currentSet }}/{{ superset().repetitions }}
+        }
+    </label>
+    <h3 class="superset-progress">
+        Exercise {{ ongoingSuperset().index + 1 }}/{{ superset().exercises.length }}
+    </h3>
+    <h1>{{ ongoingSuperset().exercise.name }}</h1>
+    <h3>
+        {{ ongoingSuperset().exercise | exerciseTarget }}
+    </h3>
+    @switch (ongoingSuperset().state) {
+        @case ('starting') {
+            <ss-timer label="Ready to start" [running]="false"></ss-timer>
+            <button class="primary" (click)="moveToNextState()">Start</button>
+        }
+        @case ('started') {
+            <ss-timer label="Started" [running]="true"></ss-timer>
+            <button class="secondary" (click)="moveToNextState()">Complete</button>
+        }
+        @case ('resting') {
+            <ss-timer class="warning"
+                      [label]="'Rest (' + (ongoingSuperset().restTime | formatSeconds) + ' target)'"
+                      [running]="true" 
+                      [limit]="ongoingSuperset().restTime" 
+                      (finished)="moveToNextState()">
+            </ss-timer>
+            <button class="secondary" (click)="moveToNextState()">Skip Rest</button>
+        }
+    }
+</div>

@@ -1,0 +1,11 @@
+@use 'variables' as *;
+
+main {
+  h2 {
+    font-family: $font-monospace;
+    color: $color-tertiary;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: u(3);
+  }
+}

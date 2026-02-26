@@ -1,0 +1,18 @@
+<header>
+    <h1>Morning Routine</h1>
+    Exercise 1/{{ routine().totalExercises() }}
+    *** Progress bar ***
+</header>
+<main>
+    <h2>Phase 1 * Warm Up</h2> <!-- maybe use phase-name styling -->
+    <div class="some good name for framed thing">
+        @switch (currentSet.kind) {
+            @case ('set') {
+                <ss-set-follow-along></ss-set-follow-along>
+            }
+            @case ('superset') {
+                <ss-superset-follow-along [superset]="currentSet" />
+            }
+        }
+    </div>
+</main>

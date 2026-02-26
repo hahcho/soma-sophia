@@ -1,0 +1,81 @@
+@use 'sass:color';
+@use 'variables' as *;
+
+
+$color-accent-primary-rgb: #{color.channel($color-accent-primary, "red", $space: rgb)}, #{color.channel($color-accent-primary, "green", $space: rgb)}, #{color.channel($color-accent-primary, "blue", $space: rgb)};
+
+label {
+  display: inline-block;
+  padding: u(3) u(4);
+  background: rgba(0, 102, 255, 0.1);
+  border: u(0.25) solid rgba($color-accent-primary, 0.2);
+  border-radius: u(2);
+  font-family: $font-monospace;
+  font-size: u(3);
+  font-weight: $font-bold;
+  color: $color-accent-primary;
+}
+
+button {
+  padding: u(4);
+  border: none;
+  border-radius: u(3);
+  font-family: $font-sans-serif;
+  font-size: u(4);
+  font-weight: $font-bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.primary {
+    background: $color-accent-primary;
+    color: $color-bg-surface;
+  }
+
+  &.secondary {
+    background: $color-bg-surface-pop;
+    color: $color-text-primary;
+    border: u(0.25) solid $color-border-subtle;
+  }
+}
+
+.ss-card {
+  background: $color-bg-surface;
+  border: u(0.5) solid $color-accent-primary;
+  border-radius: u(4);
+  padding: u(6);
+  margin-bottom: u(5);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  label {
+    margin-bottom: u(4);
+  }
+
+  .superset-progress {
+    margin-bottom: u(3);
+    text-align: center;
+    align-self: stretch;
+  }
+
+  h1 {
+    margin-bottom: u(2);
+  }
+
+  h3 {
+    font-family: $font-monospace;
+    color: $color-text-secondary;
+    margin-bottom: u(6);
+  }
+
+  ss-timer {
+    text-align: center;
+    align-self: stretch;
+    margin-bottom: u(6);
+  }
+
+  button {
+    align-self: stretch;
+  }
+}

@@ -1,5 +1,20 @@
 @use 'variables' as *;
 
+// maybe use some kind of reset.css
+h1,
+h2,
+h3,
+ul,
+li {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+
 html {
   font-size: u(4);
   font-family: $font-sans-serif;
@@ -13,4 +28,33 @@ body {
   max-width: u(140);
   margin: 0 auto;
   padding: 0;
+}
+
+h1 {
+  font-size: u(7);
+  font-weight: $font-extra-bold;
+}
+
+h2 {
+  font-size: u(4);
+  font-weight: $font-bold;
+}
+
+h3 {
+  font-size: u(3.5);
+  font-weight: $font-semi-bold;
+}
+
+header {
+  background: linear-gradient(180deg, $color-bg-surface 0%, transparent 100%);
+  backdrop-filter: blur(u(5));
+  border-bottom: u(0.25) solid $color-border-subtle;
+  padding: u(10) u(5) u(6);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+main {
+  padding: u(4) u(5) u(15);
 }
