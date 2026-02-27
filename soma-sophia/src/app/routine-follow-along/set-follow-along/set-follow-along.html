@@ -1,8 +1,10 @@
 <div class='follow-along-card'>
     <h1>{{ ongoingSet().exercise.name }}</h1>
     <h3>
-        Set {{ ongoingSet().currentSet }}/{{ set().repetitions }}
-        • {{ ongoingSet().exercise | exerciseTarget }}
+        @if (ongoingSet().repetitions > 1) {
+            Set {{ ongoingSet().currentSet }}/{{ ongoingSet().repetitions }} •
+        }
+        {{ ongoingSet().exercise | exerciseTarget }}
     </h3>
     @switch (ongoingSet().state) {
         @case ('starting') {

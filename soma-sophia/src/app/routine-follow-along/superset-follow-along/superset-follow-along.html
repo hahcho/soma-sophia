@@ -1,12 +1,11 @@
 <div class="follow-along-card">
-    <label>
-        Superset
-        @if (superset().repetitions) {
-            • Set {{ ongoingSuperset().currentSet }}/{{ superset().repetitions }}
-        }
-    </label>
+    @if (ongoingSuperset().repetitions > 1) {
+        <label>
+            Superset • Set {{ ongoingSuperset().currentSet }}/{{ ongoingSuperset().repetitions }}
+        </label>
+    }
     <h3 class="superset-progress">
-        Exercise {{ ongoingSuperset().index + 1 }}/{{ superset().exercises.length }}
+        Exercise {{ ongoingSuperset().index + 1 }}/{{ ongoingSuperset().totalExercises }}
     </h3>
     <h1>{{ ongoingSuperset().exercise.name }}</h1>
     <h3>
@@ -24,8 +23,8 @@
         @case ('resting') {
             <ss-timer class="warning"
                       [label]="'Rest (' + (ongoingSuperset().restTime | formatSeconds) + ' target)'"
-                      [running]="true" 
-                      [limit]="ongoingSuperset().restTime" 
+                      [running]="true"
+                      [limit]="ongoingSuperset().restTime"
                       (finished)="moveToNextState()">
             </ss-timer>
             <button class="secondary" (click)="moveToNextState()">Skip Rest</button>

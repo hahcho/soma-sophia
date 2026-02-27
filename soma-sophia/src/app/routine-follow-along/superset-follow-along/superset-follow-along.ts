@@ -37,16 +37,24 @@ class OngoingSuperset {
         }
     }
 
+    get totalExercises() {
+        return this.superset.exercises.length;
+    }
+
+    get repetitions() {
+        return this.superset.repetitions || 1;
+    }
+
     get restTime() {
         return this.superset.restTime || 0;
     }
 
     get isLastExercise() {
-        return this.index + 1 === this.superset.exercises.length;
+        return this.index + 1 === this.totalExercises;
     }
 
     get isLastSet() {
-        return this.currentSet === this.superset.repetitions;
+        return this.currentSet === this.repetitions;
     }
 
     private with(overrides: Partial<{index: number, currentSet: number, state: OngoingSupersetState}>): OngoingSuperset {
