@@ -1,9 +1,6 @@
 @use 'sass:color';
 @use 'variables' as *;
 
-
-$color-accent-primary-rgb: #{color.channel($color-accent-primary, "red", $space: rgb)}, #{color.channel($color-accent-primary, "green", $space: rgb)}, #{color.channel($color-accent-primary, "blue", $space: rgb)};
-
 label {
   display: inline-block;
   padding: u(3) u(4);

@@ -58,3 +58,25 @@ header {
 main {
   padding: u(4) u(5) u(15);
 }
+
+button {
+  padding: u(4);
+  border: none;
+  border-radius: u(3);
+  font-family: $font-sans-serif;
+  font-size: u(4);
+  font-weight: $font-bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.primary {
+    background: $color-accent-primary;
+    color: $color-bg-surface;
+  }
+
+  &.secondary {
+    background: $color-bg-surface-pop;
+    color: $color-text-primary;
+    border: u(0.25) solid $color-border-subtle;
+  }
+}
