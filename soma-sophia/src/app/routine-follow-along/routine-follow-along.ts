@@ -13,5 +13,6 @@ export class RoutineFollowAlong {
     private readonly routineService = inject(RoutineService);
     protected readonly routine = signal(this.routineService.getRoutine());
     protected readonly currentPhase = this.routine().phases[3];
-    protected readonly currentSet = this.currentPhase.sets[1];
+    //protected readonly currentSet = this.currentPhase.sets[1];
+    protected readonly currentSet = this.currentPhase.sets[0];
 }

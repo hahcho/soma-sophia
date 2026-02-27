@@ -8,7 +8,7 @@
     <div class="some good name for framed thing">
         @switch (currentSet.kind) {
             @case ('set') {
-                <ss-set-follow-along></ss-set-follow-along>
+                <ss-set-follow-along [set]="currentSet"></ss-set-follow-along>
             }
             @case ('superset') {
                 <ss-superset-follow-along [superset]="currentSet" />

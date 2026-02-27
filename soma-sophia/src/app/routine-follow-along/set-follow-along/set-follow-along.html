@@ -1,1 +1,26 @@
-<p>set-follow-along works!</p>
+<div class='follow-along-card'>
+    <h1>{{ ongoingSet().exercise.name }}</h1>
+    <h3>
+        Set {{ ongoingSet().currentSet }}/{{ set().repetitions }}
+        • {{ ongoingSet().exercise | exerciseTarget }}
+    </h3>
+    @switch (ongoingSet().state) {
+        @case ('starting') {
+            <ss-timer label="Ready to start" [running]="false"></ss-timer>
+            <button class="primary" (click)="moveToNextState()">Start</button>
+        }
+        @case ('started') {
+            <ss-timer label="Started" [running]="true"></ss-timer>
+            <button class="secondary" (click)="moveToNextState()">Complete</button>
+        }
+        @case ('resting') {
+            <ss-timer class="warning"
+                      [label]="'Rest (' + (ongoingSet().restTime | formatSeconds) + ' target)'"
+                      [running]="true"
+                      [limit]="ongoingSet().restTime"
+                      (finished)="moveToNextState()">
+            </ss-timer>
+            <button class="secondary" (click)="moveToNextState()">Skip Rest</button>
+        }
+    }
+</div>
