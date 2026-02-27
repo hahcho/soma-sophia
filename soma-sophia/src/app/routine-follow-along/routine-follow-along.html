@@ -1,18 +1,27 @@
 <header>
-    <h1>Morning Routine</h1>
-    Exercise 1/{{ routine().totalExercises() }}
-    *** Progress bar ***
+    <h1>{{ routine().name }}</h1>
+    <h2 style="display: inline-block">
+        Exercise
+        {{ ongoingRoutine().currentExerciseIndex + 1 }}/{{ routine().totalExercises() }}
+    </h2>
+    <div style="display: inline-block;background-color: blue; width: 20px; height: 20px">
+    </div>
 </header>
 <main>
-    <h2>Phase 1 * Warm Up</h2> <!-- maybe use phase-name styling -->
-    <div class="some good name for framed thing">
-        @switch (currentSet.kind) {
-            @case ('set') {
-                <ss-set-follow-along [set]="currentSet"></ss-set-follow-along>
-            }
-            @case ('superset') {
-                <ss-superset-follow-along [superset]="currentSet" />
-            }
+    <h2>
+        Phase {{ ongoingRoutine().phaseIndex + 1 }}
+        • {{ ongoingRoutine().currentPhase.name }}
+    </h2>
+    @switch (ongoingRoutine().currentSet.kind) {
+        @case ('set') {
+            <ss-set-follow-along
+                [set]="ongoingRoutine().currentSetAsExerciseSet"
+                (completed)="moveToNextSet()" />
         }
-    </div>
+        @case ('superset') {
+            <ss-superset-follow-along
+                [superset]="ongoingRoutine().currentSetAsExerciseSuperset"
+                (completed)="moveToNextSet()" />
+        }
+    }
 </main>

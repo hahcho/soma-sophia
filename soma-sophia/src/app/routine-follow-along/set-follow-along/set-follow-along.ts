@@ -1,4 +1,4 @@
-import {Component, input, linkedSignal} from '@angular/core';
+import {Component, input, output, linkedSignal} from '@angular/core';
 import {ExerciseSet} from '../../routine.service';
 import {ExerciseTargetPipe} from '../../exercise-target.pipe';
 import {FormatSecondsPipe} from '../../format-seconds.pipe';
@@ -52,13 +52,16 @@ class OngoingSet {
 })
 export class SetFollowAlong {
     set = input.required<ExerciseSet>();
+    completed = output<void>();
 
     protected ongoingSet = linkedSignal(() => new OngoingSet(this.set()));
 
     moveToNextState() {
         const newOngoingSet = this.ongoingSet().next();
 
-        if (newOngoingSet.state == 'completed') {return;}
+        if (newOngoingSet.state == 'completed') {
+            return this.completed.emit();
+        }
 
         this.ongoingSet.set(newOngoingSet);
     }

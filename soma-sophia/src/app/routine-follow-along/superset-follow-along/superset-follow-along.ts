@@ -1,4 +1,4 @@
-import {Component, input, linkedSignal} from '@angular/core';
+import {Component, input, output, linkedSignal} from '@angular/core';
 import {ExerciseSuperSet, Exercise} from '../../routine.service';
 import {ExerciseTargetPipe} from '../../exercise-target.pipe';
 import {Timer} from '../timer/timer';
@@ -75,12 +75,16 @@ class OngoingSuperset {
 })
 export class SupersetFollowAlong {
     superset = input.required<ExerciseSuperSet>();
-    ongoingSuperset = linkedSignal(() => new OngoingSuperset(this.superset()));
+    completed = output<void>();
+
+    protected ongoingSuperset = linkedSignal(() => new OngoingSuperset(this.superset()));
 
     moveToNextState() {
         const newOngoingSuperset = this.ongoingSuperset().next();
 
-        if (newOngoingSuperset.state == 'completed') {return;}
+        if (newOngoingSuperset.state == 'completed') {
+            return this.completed.emit();
+        }
 
         this.ongoingSuperset.set(newOngoingSuperset);
     }
