@@ -81,7 +81,7 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
                 {
                     kind: 'superset',
                     exercises: [
-                        {kind: 'simple', name: 'Neck circles // check for better naming'},
+                        {kind: 'simple', name: 'Neck circles'},
                         {kind: 'simple', name: 'Cat/cow pose'},
                         {kind: 'simple', name: 'Wrist opposite palm circles'},
                         {kind: 'simple', name: 'Wrist top circles'},
@@ -97,8 +97,8 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
                     kind: 'superset',
                     exercises: [
                         {kind: 'simple', name: 'Foam roll scapula and triceps'},
-                        {kind: 'simple', name: 'Elevated Straight arm push down 60s - 120s // check for better naming'},
-                        {kind: 'simple', name: 'laying straight arm rows // check for better naming'}
+                        {kind: 'static', name: 'Elevated Straight arm push down', holdTime: 120},
+                        {kind: 'dynamic', name: 'laying straight arm rows', repetitions: 10}
                     ]
                 }
             ]
@@ -129,7 +129,7 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
                         holdTime: 30,
                     },
                     repetitions: 3,
-                    restTime: 90,
+                    restTime: 120,
                 },
                 {
                     kind: 'superset',
@@ -139,13 +139,13 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
                         {kind: 'dynamic', name: 'compression work', repetitions: 12}
                     ],
                     repetitions: 3,
-                    restTime: 10,
+                    restTime: 90,
                 },
                 {
                     kind: 'superset',
                     exercises: [
-                        {kind: 'static', name: 'reverse elevated plank', holdTime: 30},
-                        {kind: 'static', name: 'ring holds', holdTime: 30}
+                        {kind: 'static', name: 'ring holds', holdTime: 30},
+                        {kind: 'static', name: 'compression work', holdTime: 30},
                     ],
                     repetitions: 3,
                     restTime: 120,
