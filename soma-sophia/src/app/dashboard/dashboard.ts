@@ -3,10 +3,11 @@ import {DecimalPipe} from '@angular/common';
 import {ExerciseTargetPipe} from '../exercise-target.pipe';
 import {FormatSecondsPipe} from '../format-seconds.pipe';
 import {RoutineService} from '../routine.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
     selector: 'ss-dashboard',
-    imports: [DecimalPipe, FormatSecondsPipe, ExerciseTargetPipe],
+    imports: [RouterLink, DecimalPipe, FormatSecondsPipe, ExerciseTargetPipe],
     templateUrl: './dashboard.html',
     styleUrl: './dashboard.scss',
 })

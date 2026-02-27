@@ -3,6 +3,7 @@ import {RoutineService, Routine, ExerciseSet, ExerciseSuperSet} from '../routine
 import {SetFollowAlong} from './set-follow-along/set-follow-along';
 import {SupersetFollowAlong} from './superset-follow-along/superset-follow-along';
 import {ProgressBar} from './progress-bar/progress-bar';
+import {Router} from '@angular/router';
 
 
 class OngoingRoutine {
@@ -63,18 +64,18 @@ class OngoingRoutine {
     styleUrl: './routine-follow-along.scss',
 })
 export class RoutineFollowAlong {
-    completed = output<void>();
-
     private readonly routineService = inject(RoutineService);
+    private readonly router = inject(Router);
     protected readonly routine = signal(this.routineService.getRoutine());
     protected readonly ongoingRoutine = linkedSignal(() => new OngoingRoutine(this.routine()));
 
     moveToNextSet() {
         const newOngoingRoutine = this.ongoingRoutine().next();
 
-        console.log(newOngoingRoutine);
-
-        if (newOngoingRoutine.completed) {return this.completed.emit();}
+        if (newOngoingRoutine.completed) {
+            this.router.navigate(['/completed']);
+            return;
+        }
 
         this.ongoingRoutine.set(newOngoingRoutine);
     }
