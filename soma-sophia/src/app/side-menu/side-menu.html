@@ -1,0 +1,24 @@
+<button class="hamburger" (click)="toggle()" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+<div class="overlay" [class.visible]="isOpen()" (click)="close()"></div>
+
+<nav [class.open]="isOpen()">
+    <p class="app-name">Soma Sophia</p>
+    <ul>
+        <li>
+            <a routerLink="/"
+               routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}"
+               (click)="close()">Dashboard</a>
+        </li>
+        <li>
+            <a routerLink="/follow-along"
+               routerLinkActive="active"
+               (click)="close()">Follow Along</a>
+        </li>
+    </ul>
+</nav>
