@@ -1,10 +1,11 @@
 <header>
     <h1>{{ routine().name }}</h1>
-    <h2 style="display: inline-block">
-        Exercise
-        {{ ongoingRoutine().currentExerciseIndex + 1 }}/{{ routine().totalExercises() }}
-    </h2>
-    <div style="display: inline-block;background-color: blue; width: 20px; height: 20px">
+    <div class="exercise-progress">
+        <h2>
+            Exercise
+            {{ ongoingRoutine().currentExerciseIndex + 1 }}/{{ routine().totalExercises() }}
+        </h2>
+        <ss-progress-bar [filled]="ongoingRoutine().exercisesProgress" />
     </div>
 </header>
 <main>

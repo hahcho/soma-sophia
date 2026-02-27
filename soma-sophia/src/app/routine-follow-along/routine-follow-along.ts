@@ -2,6 +2,7 @@ import {Component, inject, signal, output, linkedSignal} from '@angular/core';
 import {RoutineService, Routine, ExerciseSet, ExerciseSuperSet} from '../routine.service';
 import {SetFollowAlong} from './set-follow-along/set-follow-along';
 import {SupersetFollowAlong} from './superset-follow-along/superset-follow-along';
+import {ProgressBar} from './progress-bar/progress-bar';
 
 
 class OngoingRoutine {
@@ -13,6 +14,10 @@ class OngoingRoutine {
             index += this.routine.phases[i].sets.length;
         }
         return index + this.setIndex;
+    }
+
+    get exercisesProgress() {
+        return (this.currentExerciseIndex + 1) / this.routine.totalExercises();
     }
 
     get currentPhase() {
@@ -53,7 +58,7 @@ class OngoingRoutine {
 
 @Component({
     selector: 'ss-routine-follow-along',
-    imports: [SetFollowAlong, SupersetFollowAlong],
+    imports: [SetFollowAlong, SupersetFollowAlong, ProgressBar],
     templateUrl: './routine-follow-along.html',
     styleUrl: './routine-follow-along.scss',
 })
