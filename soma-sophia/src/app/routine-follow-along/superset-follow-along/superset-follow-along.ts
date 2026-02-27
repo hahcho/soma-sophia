@@ -10,7 +10,7 @@ type OngoingSupersetState = 'starting' | 'started' | 'resting' | 'completed';
 class OngoingSuperset {
     exercise: Exercise;
 
-    constructor(private superset: ExerciseSuperSet, public index: number, public currentSet: number, public state: OngoingSupersetState) {
+    constructor(private superset: ExerciseSuperSet, public index: number = 0, public currentSet: number = 1, public state: OngoingSupersetState = 'starting') {
         this.exercise = this.superset.exercises[this.index];
     }
 
@@ -49,10 +49,6 @@ class OngoingSuperset {
         return this.currentSet === this.superset.repetitions;
     }
 
-    get isFinished() {
-        return this.isLastExercise && this.isLastSet && this.state === 'completed';
-    }
-
     private with(overrides: Partial<{index: number, currentSet: number, state: OngoingSupersetState}>): OngoingSuperset {
         return new OngoingSuperset(
             this.superset,
@@ -67,16 +63,16 @@ class OngoingSuperset {
     selector: 'ss-superset-follow-along',
     imports: [ExerciseTargetPipe, FormatSecondsPipe, Timer],
     templateUrl: './superset-follow-along.html',
-    styleUrl: './superset-follow-along.scss',
+    styleUrls: ['../card-follow-along.scss', './superset-follow-along.scss'],
 })
 export class SupersetFollowAlong {
     superset = input.required<ExerciseSuperSet>();
-    ongoingSuperset = linkedSignal(() => new OngoingSuperset(this.superset(), 0, 1, 'starting'));
+    ongoingSuperset = linkedSignal(() => new OngoingSuperset(this.superset()));
 
     moveToNextState() {
         const newOngoingSuperset = this.ongoingSuperset().next();
 
-        if (newOngoingSuperset.isFinished) {return;}
+        if (newOngoingSuperset.state == 'completed') {return;}
 
         this.ongoingSuperset.set(newOngoingSuperset);
     }
