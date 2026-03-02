@@ -1,5 +1,5 @@
 import {Component, input, output, linkedSignal} from '@angular/core';
-import {ExerciseSuperSet, Exercise} from '../../routine.service';
+import {ExerciseSuperSet} from '../../routine.service';
 import {ExerciseTargetPipe} from '../../exercise-target.pipe';
 import {Timer} from '../timer/timer';
 import {FormatSecondsPipe} from '../../format-seconds.pipe';
@@ -8,10 +8,10 @@ import {FormatSecondsPipe} from '../../format-seconds.pipe';
 type OngoingSupersetState = 'starting' | 'started' | 'resting' | 'completed';
 
 class OngoingSuperset {
-    exercise: Exercise;
+    public exerciseTarget;
 
     constructor(private superset: ExerciseSuperSet, public index: number = 0, public currentSet: number = 1, public state: OngoingSupersetState = 'starting') {
-        this.exercise = this.superset.exercises[this.index];
+        this.exerciseTarget = this.superset.exerciseTargets[this.index];
     }
 
     next() {
@@ -38,7 +38,7 @@ class OngoingSuperset {
     }
 
     get totalExercises() {
-        return this.superset.exercises.length;
+        return this.superset.exerciseTargets.length;
     }
 
     get repetitions() {

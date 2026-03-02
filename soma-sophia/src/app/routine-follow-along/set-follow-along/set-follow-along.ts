@@ -13,6 +13,10 @@ class OngoingSet {
         return this.set.exercise;
     }
 
+    get target() {
+        return this.set.target;
+    }
+
     get repetitions() {
         return this.set.repetitions || 1;
     }

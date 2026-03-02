@@ -7,9 +7,9 @@
     <h3 class="superset-progress">
         Exercise {{ ongoingSuperset().index + 1 }}/{{ ongoingSuperset().totalExercises }}
     </h3>
-    <h1>{{ ongoingSuperset().exercise.name }}</h1>
+    <h1>{{ ongoingSuperset().exerciseTarget.exercise.name }}</h1>
     <h3>
-        {{ ongoingSuperset().exercise | exerciseTarget }}
+        {{ ongoingSuperset().exerciseTarget.target | exerciseTarget }}
     </h3>
     @switch (ongoingSuperset().state) {
         @case ('starting') {

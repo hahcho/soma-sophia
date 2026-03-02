@@ -4,7 +4,7 @@
         @if (ongoingSet().repetitions > 1) {
             Set {{ ongoingSet().currentSet }}/{{ ongoingSet().repetitions }} •
         }
-        {{ ongoingSet().exercise | exerciseTarget }}
+        {{ ongoingSet().target | exerciseTarget }}
     </h3>
     @switch (ongoingSet().state) {
         @case ('starting') {

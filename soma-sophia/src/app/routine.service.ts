@@ -1,34 +1,32 @@
 import {Injectable} from '@angular/core';
 
-export type SimpleExercise = {
-    kind: 'simple';
-    name: string;
-}
-
-export type StaticExercise = {
+export type StaticHold = {
     kind: 'static';
-    name: string;
     holdTime: number;
 }
 
-export type DynamicExercise = {
+export type DynamicRepetitions = {
     kind: 'dynamic';
-    name: string;
     repetitions: number;
 }
 
-export type Exercise = SimpleExercise | StaticExercise | DynamicExercise;
+export type Repetition = StaticHold | DynamicRepetitions;
+
+export type Exercise = {
+    name: string;
+};
 
 export type ExerciseSet = {
-    kind: 'set',
+    kind: 'set';
     exercise: Exercise;
+    target?: Repetition;
     repetitions?: number;
     restTime?: number;
 }
 
 export type ExerciseSuperSet = {
-    kind: 'superset',
-    exercises: Exercise[];
+    kind: 'superset';
+    exerciseTargets: {exercise: Exercise, target?: Repetition}[];
     repetitions?: number;
     restTime?: number;
 }
@@ -80,12 +78,12 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             sets: [
                 {
                     kind: 'superset',
-                    exercises: [
-                        {kind: 'simple', name: 'Neck circles'},
-                        {kind: 'simple', name: 'Cat/cow pose'},
-                        {kind: 'simple', name: 'Wrist opposite palm circles'},
-                        {kind: 'simple', name: 'Wrist top circles'},
-                        {kind: 'simple', name: 'Ankle sitting'}
+                    exerciseTargets: [
+                        {exercise: {name: 'Neck circles'}},
+                        {exercise: {name: 'Cat/cow pose'}},
+                        {exercise: {name: 'Wrist opposite palm circles'}},
+                        {exercise: {name: 'Wrist top circles'}},
+                        {exercise: {name: 'Ankle sitting'}}
                     ]
                 }
             ]
@@ -95,10 +93,16 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             sets: [
                 {
                     kind: 'superset',
-                    exercises: [
-                        {kind: 'simple', name: 'Foam roll scapula and triceps'},
-                        {kind: 'static', name: 'Elevated Straight arm push down', holdTime: 120},
-                        {kind: 'dynamic', name: 'laying straight arm rows', repetitions: 10}
+                    exerciseTargets: [
+                        {exercise: {name: 'Foam roll scapula and triceps'}},
+                        {
+                            exercise: {name: 'Elevated Straight arm push down'},
+                            target: {kind: 'static', holdTime: 120}
+                        },
+                        {
+                            exercise: {name: 'laying straight arm rows'},
+                            target: {kind: 'dynamic', repetitions: 10}
+                        }
                     ]
                 }
             ]
@@ -108,12 +112,12 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             sets: [
                 {
                     kind: 'superset',
-                    exercises: [
-                        {kind: 'simple', name: 'Chair seated hip hinge'},
-                        {kind: 'simple', name: 'Downward facing dog'},
-                        {kind: 'simple', name: 'Standing pike to squat and back'},
-                        {kind: 'simple', name: 'Mckenzi push ups'},
-                        {kind: 'simple', name: 'Seated pike'},
+                    exerciseTargets: [
+                        {exercise: {name: 'Chair seated hip hinge'}},
+                        {exercise: {name: 'Downward facing dog'}},
+                        {exercise: {name: 'Standing pike to squat and back'}},
+                        {exercise: {name: 'Mckenzi push ups'}},
+                        {exercise: {name: 'Seated pike'}},
                     ]
                 }
             ]
@@ -123,29 +127,45 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             sets: [
                 {
                     kind: 'set',
-                    exercise: {
-                        kind: 'static',
-                        name: 'bend leg v sit on floor',
-                        holdTime: 30,
-                    },
+                    exercise: {name: 'bend leg v sit on floor'},
+                    target: {kind: 'static', holdTime: 30},
                     repetitions: 3,
                     restTime: 120,
                 },
                 {
                     kind: 'superset',
-                    exercises: [
-                        {kind: 'dynamic', name: 'push ups', repetitions: 10},
-                        {kind: 'dynamic', name: 'chest to bar pull ups', repetitions: 5},
-                        {kind: 'dynamic', name: 'compression work', repetitions: 12}
+                    exerciseTargets: [
+                        {
+                            exercise: {name: 'push ups'},
+                            target: {kind: 'dynamic', repetitions: 10},
+                        },
+                        {
+                            exercise: {name: 'chest to bar pull ups'},
+                            target: {kind: 'dynamic', repetitions: 5},
+                        },
+                        {
+                            exercise: {name: 'compression work'},
+                            target: {kind: 'dynamic', repetitions: 12},
+                        }
                     ],
                     repetitions: 3,
                     restTime: 90,
                 },
                 {
                     kind: 'superset',
-                    exercises: [
-                        {kind: 'static', name: 'ring holds', holdTime: 30},
-                        {kind: 'static', name: 'compression work', holdTime: 30},
+                    exerciseTargets: [
+                        {
+                            exercise: {name: 'ring holds'},
+                            target: {kind: 'static', holdTime: 30},
+                        },
+                        {
+                            exercise: {name: 'compression work'},
+                            target: {kind: 'static', holdTime: 30},
+                        },
+                        {
+                            exercise: {name: 'compression work'},
+                            target: {kind: 'dynamic', repetitions: 12},
+                        }
                     ],
                     repetitions: 3,
                     restTime: 120,

@@ -16,11 +16,11 @@
             @if (set.kind == 'superset') {
                 <li>
                     <ul class="card">
-                        @for (exercise of set.exercises; track exercise.name) {
+                        @for (exerciseTarget of set.exerciseTargets; track exerciseTarget.exercise.name) {
                             <li>
-                                <h3> {{ exercise.name }} </h3>
+                                <h3> {{ exerciseTarget.exercise.name }} </h3>
                                 <div class="details">
-                                    {{ exercise | exerciseTarget }}
+                                    {{ exerciseTarget.target | exerciseTarget }}
                                 </div>
                             </li>
                         }
@@ -42,7 +42,7 @@
                         @if (set.repetitions) {
                             {{ set.repetitions }} sets ×
                         }
-                        {{ set.exercise | exerciseTarget }}
+                        {{ set.target | exerciseTarget }}
                         @if (set.restTime) {
                             • {{ set.restTime | formatSeconds }} rest
                         }
