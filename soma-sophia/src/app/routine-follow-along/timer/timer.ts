@@ -1,6 +1,31 @@
 import {Component, OnDestroy, signal, input, effect, output} from '@angular/core';
 import {StopWatchFormat} from './stopwatch-format.pipe';
 
+
+class Ticker {
+    private intervalId: ReturnType<typeof setInterval>;
+
+    constructor(timeLength: number, onTick: (diff: number) => void) {
+        const endTime = Date.now() + timeLength;
+        let lastTickTime = Date.now();
+
+        this.intervalId = setInterval(() => {
+            const now = Date.now()
+            if (now < endTime) {
+                onTick(now - lastTickTime);
+            } else {
+                onTick(endTime - lastTickTime);
+                this.destroy();
+            }
+            lastTickTime = now;
+        }, 1000);
+    }
+
+    destroy() {
+        clearInterval(this.intervalId);
+    }
+}
+
 @Component({
     selector: 'ss-timer',
     imports: [StopWatchFormat],
@@ -15,33 +40,24 @@ export class Timer implements OnDestroy {
     finished = output<void>();
 
     protected time = signal(0);
-    private intervalId: ReturnType<typeof setInterval> | null = null;
+    private ticker: Ticker | null = null;
 
     constructor() {
         effect(() => {
             if (this.running()) {
-                this.intervalId = setInterval(() => {
-                    if (this.time() < this.limit()) {
-                        this.time.update(t => t + 1);
-                    } else {
-                        this.cleanupInterval();
-                        this.finished.emit();
-                    }
-                }, 1000);
+                this.ticker = new Ticker(this.limit() * 1000, (diffBetweenTicks) => {
+                    const diffBetweenTicksSeconds = Math.floor(diffBetweenTicks / 1000);
+                    const updatedTime = Math.min(this.limit(), this.time() + diffBetweenTicksSeconds);
+                    this.time.set(updatedTime);
+                });
             } else {
-                this.cleanupInterval();
+                this.ngOnDestroy();
             }
         });
     }
 
     ngOnDestroy() {
-        this.cleanupInterval();
-    }
-
-    private cleanupInterval() {
-        if (this.intervalId) {
-            clearInterval(this.intervalId);
-            this.intervalId = null;
-        }
+        this.ticker?.destroy();
+        this.ticker = null;
     }
 }
