@@ -2,8 +2,8 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {Repetition} from './routine.service';
 import {FormatSecondsPipe} from './format-seconds.pipe';
 
-@Pipe({name: 'exerciseTarget'})
-export class ExerciseTargetPipe implements PipeTransform {
+@Pipe({name: 'repetition'})
+export class RepetitionPipe implements PipeTransform {
     private formatSeconds = new FormatSecondsPipe();
 
     transform(target: Repetition | undefined): string {

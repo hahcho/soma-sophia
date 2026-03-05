@@ -20,7 +20,7 @@
                         @if (set.repetitions) {
                             {{ set.repetitions }} sets ×
                         }
-                        {{ set.goals[0].target | exerciseTarget }}
+                        {{ set.goals[0].target | repetition }}
                         @if (set.restTime) {
                             • {{ set.restTime | formatSeconds }} rest
                         }
@@ -33,7 +33,7 @@
                             <li>
                                 <h3> {{ goal.exercise.name }} </h3>
                                 <div class="details">
-                                    {{ goal.target | exerciseTarget }}
+                                    {{ goal.target | repetition }}
                                 </div>
                             </li>
                         }

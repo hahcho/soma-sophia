@@ -1,6 +1,6 @@
 import {Component, input, output, linkedSignal} from '@angular/core';
 import {RoutineSet} from '../../routine.service';
-import {ExerciseTargetPipe} from '../../exercise-target.pipe';
+import {RepetitionPipe} from '../../repetition.pipe';
 import {FormatSecondsPipe} from '../../format-seconds.pipe';
 import {Timer} from '../timer/timer';
 
@@ -81,7 +81,7 @@ class OngoingSet {
 
 @Component({
     selector: 'ss-set-follow-along',
-    imports: [ExerciseTargetPipe, Timer, FormatSecondsPipe],
+    imports: [RepetitionPipe, Timer, FormatSecondsPipe],
     templateUrl: './set-follow-along.html',
     styleUrls: ['./set-follow-along.scss'],
 })

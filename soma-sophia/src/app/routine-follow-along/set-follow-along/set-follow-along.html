@@ -8,14 +8,14 @@
         Exercise {{ ongoingSet().index + 1 }}/{{ ongoingSet().totalExercises }}
     </h3>
     <h1>{{ ongoingSet().goal.exercise.name }}</h1>
-    <h3>{{ ongoingSet().goal.target | exerciseTarget }}</h3>
+    <h3>{{ ongoingSet().goal.target | repetition }}</h3>
 } @else {
     <h1>{{ ongoingSet().goal.exercise.name }}</h1>
     <h3>
         @if (ongoingSet().totalRepetitions > 1) {
             Set {{ ongoingSet().repetition }}/{{ ongoingSet().totalRepetitions }} •
         }
-        {{ ongoingSet().goal.target | exerciseTarget }}
+        {{ ongoingSet().goal.target | repetition }}
     </h3>
 }
 @switch (ongoingSet().state) {
