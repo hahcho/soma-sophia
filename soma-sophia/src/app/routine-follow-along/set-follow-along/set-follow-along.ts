@@ -7,7 +7,7 @@ import {Timer} from '../timer/timer';
 type OngoingSetState = 'starting' | 'started' | 'resting' | 'completed';
 
 class OngoingSet {
-    public exerciseTarget;
+    public goal;
 
     constructor(
         private set: RoutineSet,
@@ -15,11 +15,11 @@ class OngoingSet {
         public repetition = 1,
         public state: OngoingSetState = 'starting'
     ) {
-        this.exerciseTarget = this.set.exerciseTargets[this.index];
+        this.goal = this.set.goals[this.index];
     }
 
     get totalExercises() {
-        return this.set.exerciseTargets.length;
+        return this.set.goals.length;
     }
 
     get totalRepetitions() {

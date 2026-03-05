@@ -13,14 +13,14 @@
         <h2 class="phase-name"> {{ phase.name }} </h2>
         <ul class="set-list">
         @for (set of phase.sets; track set) {
-            @if (set.exerciseTargets.length === 1) {
+            @if (set.goals.length === 1) {
                 <li class="card">
-                    <h3> {{ set.exerciseTargets[0].exercise.name }} </h3>
+                    <h3> {{ set.goals[0].exercise.name }} </h3>
                     <div class="details">
                         @if (set.repetitions) {
                             {{ set.repetitions }} sets ×
                         }
-                        {{ set.exerciseTargets[0].target | exerciseTarget }}
+                        {{ set.goals[0].target | exerciseTarget }}
                         @if (set.restTime) {
                             • {{ set.restTime | formatSeconds }} rest
                         }
@@ -29,11 +29,11 @@
             } @else {
                 <li>
                     <ul class="card">
-                        @for (exerciseTarget of set.exerciseTargets; track exerciseTarget.exercise.name) {
+                        @for (goal of set.goals; track goal.exercise.name) {
                             <li>
-                                <h3> {{ exerciseTarget.exercise.name }} </h3>
+                                <h3> {{ goal.exercise.name }} </h3>
                                 <div class="details">
-                                    {{ exerciseTarget.target | exerciseTarget }}
+                                    {{ goal.target | exerciseTarget }}
                                 </div>
                             </li>
                         }

@@ -17,7 +17,7 @@ export type Exercise = {
 };
 
 export type RoutineSet = {
-    exerciseTargets: {exercise: Exercise, target?: Repetition}[];
+    goals: {exercise: Exercise, target?: Repetition}[];
     repetitions?: number;
     restTime?: number;
 }
@@ -68,7 +68,7 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             name: 'Warm up',
             sets: [
                 {
-                    exerciseTargets: [
+                    goals: [
                         {exercise: {name: 'Neck circles'}},
                         {exercise: {name: 'Cat/cow pose'}},
                         {exercise: {name: 'Wrist opposite palm circles'}},
@@ -82,7 +82,7 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             name: 'Shoulder mobility',
             sets: [
                 {
-                    exerciseTargets: [
+                    goals: [
                         {exercise: {name: 'Foam roll scapula and triceps'}},
                         {
                             exercise: {name: 'Elevated Straight arm push down'},
@@ -100,7 +100,7 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             name: 'Hamstring/Pike',
             sets: [
                 {
-                    exerciseTargets: [
+                    goals: [
                         {exercise: {name: 'Chair seated hip hinge'}},
                         {exercise: {name: 'Downward facing dog'}},
                         {exercise: {name: 'Standing pike to squat and back'}},
@@ -114,12 +114,12 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             name: 'Strength',
             sets: [
                 {
-                    exerciseTargets: [{exercise: {name: 'bend leg v sit on floor'}, target: {kind: 'static', holdTime: 30}}],
+                    goals: [{exercise: {name: 'bend leg v sit on floor'}, target: {kind: 'static', holdTime: 30}}],
                     repetitions: 3,
                     restTime: 120,
                 },
                 {
-                    exerciseTargets: [
+                    goals: [
                         {
                             exercise: {name: 'push ups'},
                             target: {kind: 'dynamic', repetitions: 10},
@@ -137,7 +137,7 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
                     restTime: 90,
                 },
                 {
-                    exerciseTargets: [
+                    goals: [
                         {
                             exercise: {name: 'ring holds'},
                             target: {kind: 'static', holdTime: 30},
