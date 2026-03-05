@@ -1,5 +1,5 @@
 import {Component, input, output, linkedSignal} from '@angular/core';
-import {ExerciseSuperSet} from '../../routine.service';
+import {RoutineSet} from '../../routine.service';
 import {ExerciseTargetPipe} from '../../exercise-target.pipe';
 import {Timer} from '../timer/timer';
 import {FormatSecondsPipe} from '../../format-seconds.pipe';
@@ -10,7 +10,7 @@ type OngoingSupersetState = 'starting' | 'started' | 'resting' | 'completed';
 class OngoingSuperset {
     public exerciseTarget;
 
-    constructor(private superset: ExerciseSuperSet, public index: number = 0, public currentSet: number = 1, public state: OngoingSupersetState = 'starting') {
+    constructor(private superset: RoutineSet, public index: number = 0, public currentSet: number = 1, public state: OngoingSupersetState = 'starting') {
         this.exerciseTarget = this.superset.exerciseTargets[this.index];
     }
 
@@ -74,7 +74,7 @@ class OngoingSuperset {
     styleUrls: ['../card-follow-along.scss', './superset-follow-along.scss'],
 })
 export class SupersetFollowAlong {
-    superset = input.required<ExerciseSuperSet>();
+    superset = input.required<RoutineSet>();
     completed = output<void>();
 
     protected ongoingSuperset = linkedSignal(() => new OngoingSuperset(this.superset()));

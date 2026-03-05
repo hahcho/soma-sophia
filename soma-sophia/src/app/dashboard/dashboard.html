@@ -13,7 +13,20 @@
         <h2 class="phase-name"> {{ phase.name }} </h2>
         <ul class="set-list">
         @for (set of phase.sets; track set) {
-            @if (set.kind == 'superset') {
+            @if (set.exerciseTargets.length === 1) {
+                <li class="card">
+                    <h3> {{ set.exerciseTargets[0].exercise.name }} </h3>
+                    <div class="details">
+                        @if (set.repetitions) {
+                            {{ set.repetitions }} sets ×
+                        }
+                        {{ set.exerciseTargets[0].target | exerciseTarget }}
+                        @if (set.restTime) {
+                            • {{ set.restTime | formatSeconds }} rest
+                        }
+                    </div>
+                </li>
+            } @else {
                 <li>
                     <ul class="card">
                         @for (exerciseTarget of set.exerciseTargets; track exerciseTarget.exercise.name) {
@@ -34,19 +47,6 @@
                             }
                         </li>
                     </ul>
-                </li>
-            } @else if (set.kind == 'set') {
-                <li class="card">
-                    <h3> {{ set.exercise.name }} </h3>
-                    <div class="details">
-                        @if (set.repetitions) {
-                            {{ set.repetitions }} sets ×
-                        }
-                        {{ set.target | exerciseTarget }}
-                        @if (set.restTime) {
-                            • {{ set.restTime | formatSeconds }} rest
-                        }
-                    </div>
                 </li>
             }
         }

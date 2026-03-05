@@ -1,5 +1,5 @@
 import {Component, input, output, linkedSignal} from '@angular/core';
-import {ExerciseSet} from '../../routine.service';
+import {RoutineSet} from '../../routine.service';
 import {ExerciseTargetPipe} from '../../exercise-target.pipe';
 import {FormatSecondsPipe} from '../../format-seconds.pipe';
 import {Timer} from '../timer/timer';
@@ -7,14 +7,14 @@ import {Timer} from '../timer/timer';
 type OngoingSetState = 'starting' | 'started' | 'resting' | 'completed';
 
 class OngoingSet {
-    constructor(private set: ExerciseSet, public state: OngoingSetState = 'starting', public currentSet = 1) {};
+    constructor(private set: RoutineSet, public state: OngoingSetState = 'starting', public currentSet = 1) {};
 
     get exercise() {
-        return this.set.exercise;
+        return this.set.exerciseTargets[0].exercise;
     }
 
     get target() {
-        return this.set.target;
+        return this.set.exerciseTargets[0].target;
     }
 
     get repetitions() {
@@ -55,7 +55,7 @@ class OngoingSet {
     styleUrls: ['../card-follow-along.scss', './set-follow-along.scss'],
 })
 export class SetFollowAlong {
-    set = input.required<ExerciseSet>();
+    set = input.required<RoutineSet>();
     completed = output<void>();
 
     protected ongoingSet = linkedSignal(() => new OngoingSet(this.set()));

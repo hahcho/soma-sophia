@@ -13,16 +13,13 @@
         Phase {{ ongoingRoutine().phaseIndex + 1 }}
         • {{ ongoingRoutine().currentPhase.name }}
     </h2>
-    @switch (ongoingRoutine().currentSet.kind) {
-        @case ('set') {
-            <ss-set-follow-along
-                [set]="ongoingRoutine().currentSetAsExerciseSet"
-                (completed)="moveToNextSet()" />
-        }
-        @case ('superset') {
-            <ss-superset-follow-along
-                [superset]="ongoingRoutine().currentSetAsExerciseSuperset"
-                (completed)="moveToNextSet()" />
-        }
+    @if (ongoingRoutine().currentSet.exerciseTargets.length === 1) {
+        <ss-set-follow-along
+            [set]="ongoingRoutine().currentSet"
+            (completed)="moveToNextSet()" />
+    } @else {
+        <ss-superset-follow-along
+            [superset]="ongoingRoutine().currentSet"
+            (completed)="moveToNextSet()" />
     }
 </main>

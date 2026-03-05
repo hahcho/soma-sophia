@@ -16,16 +16,7 @@ export type Exercise = {
     name: string;
 };
 
-export type ExerciseSet = {
-    kind: 'set';
-    exercise: Exercise;
-    target?: Repetition;
-    repetitions?: number;
-    restTime?: number;
-}
-
-export type ExerciseSuperSet = {
-    kind: 'superset';
+export type RoutineSet = {
     exerciseTargets: {exercise: Exercise, target?: Repetition}[];
     repetitions?: number;
     restTime?: number;
@@ -33,7 +24,7 @@ export type ExerciseSuperSet = {
 
 export type Phase = {
     name: string;
-    sets: (ExerciseSet | ExerciseSuperSet)[];
+    sets: RoutineSet[];
 }
 
 export class Routine {
@@ -77,7 +68,6 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             name: 'Warm up',
             sets: [
                 {
-                    kind: 'superset',
                     exerciseTargets: [
                         {exercise: {name: 'Neck circles'}},
                         {exercise: {name: 'Cat/cow pose'}},
@@ -92,7 +82,6 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             name: 'Shoulder mobility',
             sets: [
                 {
-                    kind: 'superset',
                     exerciseTargets: [
                         {exercise: {name: 'Foam roll scapula and triceps'}},
                         {
@@ -111,7 +100,6 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             name: 'Hamstring/Pike',
             sets: [
                 {
-                    kind: 'superset',
                     exerciseTargets: [
                         {exercise: {name: 'Chair seated hip hinge'}},
                         {exercise: {name: 'Downward facing dog'}},
@@ -126,14 +114,11 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
             name: 'Strength',
             sets: [
                 {
-                    kind: 'set',
-                    exercise: {name: 'bend leg v sit on floor'},
-                    target: {kind: 'static', holdTime: 30},
+                    exerciseTargets: [{exercise: {name: 'bend leg v sit on floor'}, target: {kind: 'static', holdTime: 30}}],
                     repetitions: 3,
                     restTime: 120,
                 },
                 {
-                    kind: 'superset',
                     exerciseTargets: [
                         {
                             exercise: {name: 'push ups'},
@@ -152,7 +137,6 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
                     restTime: 90,
                 },
                 {
-                    kind: 'superset',
                     exerciseTargets: [
                         {
                             exercise: {name: 'ring holds'},
