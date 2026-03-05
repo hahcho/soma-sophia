@@ -13,13 +13,7 @@
         Phase {{ ongoingRoutine().phaseIndex + 1 }}
         • {{ ongoingRoutine().currentPhase.name }}
     </h2>
-    @if (ongoingRoutine().currentSet.exerciseTargets.length === 1) {
-        <ss-set-follow-along
-            [set]="ongoingRoutine().currentSet"
-            (completed)="moveToNextSet()" />
-    } @else {
-        <ss-superset-follow-along
-            [superset]="ongoingRoutine().currentSet"
-            (completed)="moveToNextSet()" />
-    }
+    <ss-set-follow-along
+        [set]="ongoingRoutine().currentSet"
+        (completed)="moveToNextSet()" />
 </main>

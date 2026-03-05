@@ -1,28 +1,39 @@
-<div class='follow-along-card'>
-    <h1>{{ ongoingSet().exercise.name }}</h1>
-    <h3>
-        @if (ongoingSet().repetitions > 1) {
-            Set {{ ongoingSet().currentSet }}/{{ ongoingSet().repetitions }} •
-        }
-        {{ ongoingSet().target | exerciseTarget }}
-    </h3>
-    @switch (ongoingSet().state) {
-        @case ('starting') {
-            <ss-timer label="Ready to start" [running]="false"></ss-timer>
-            <button class="primary" (click)="moveToNextState()">Start</button>
-        }
-        @case ('started') {
-            <ss-timer label="Started" [running]="true"></ss-timer>
-            <button class="secondary" (click)="moveToNextState()">Complete</button>
-        }
-        @case ('resting') {
-            <ss-timer class="warning"
-                      [label]="'Rest (' + (ongoingSet().restTime | formatSeconds) + ' target)'"
-                      [running]="true"
-                      [limit]="ongoingSet().restTime"
-                      (finished)="moveToNextState()">
-            </ss-timer>
-            <button class="secondary" (click)="moveToNextState()">Skip Rest</button>
-        }
+@if (ongoingSet().isSuperset) {
+    @if (ongoingSet().totalRepetitions > 1) {
+        <label>
+            Superset • Set {{ ongoingSet().repetition }}/{{ ongoingSet().totalRepetitions }}
+        </label>
     }
-</div>
+    <h3 class="superset-progress">
+        Exercise {{ ongoingSet().index + 1 }}/{{ ongoingSet().totalExercises }}
+    </h3>
+    <h1>{{ ongoingSet().exerciseTarget.exercise.name }}</h1>
+    <h3>{{ ongoingSet().exerciseTarget.target | exerciseTarget }}</h3>
+} @else {
+    <h1>{{ ongoingSet().exerciseTarget.exercise.name }}</h1>
+    <h3>
+        @if (ongoingSet().totalRepetitions > 1) {
+            Set {{ ongoingSet().repetition }}/{{ ongoingSet().totalRepetitions }} •
+        }
+        {{ ongoingSet().exerciseTarget.target | exerciseTarget }}
+    </h3>
+}
+@switch (ongoingSet().state) {
+    @case ('starting') {
+        <ss-timer label="Ready to start" [running]="false"></ss-timer>
+        <button class="primary" (click)="moveToNextState()">Start</button>
+    }
+    @case ('started') {
+        <ss-timer label="Started" [running]="true"></ss-timer>
+        <button class="secondary" (click)="moveToNextState()">Complete</button>
+    }
+    @case ('resting') {
+        <ss-timer class="warning"
+                  [label]="'Rest (' + (ongoingSet().restTime | formatSeconds) + ' target)'"
+                  [running]="true"
+                  [limit]="ongoingSet().restTime"
+                  (finished)="moveToNextState()">
+        </ss-timer>
+        <button class="secondary" (click)="moveToNextState()">Skip Rest</button>
+    }
+}

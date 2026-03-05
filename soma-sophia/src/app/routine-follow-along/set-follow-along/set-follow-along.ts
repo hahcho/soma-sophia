@@ -7,17 +7,22 @@ import {Timer} from '../timer/timer';
 type OngoingSetState = 'starting' | 'started' | 'resting' | 'completed';
 
 class OngoingSet {
-    constructor(private set: RoutineSet, public state: OngoingSetState = 'starting', public currentSet = 1) {};
+    public exerciseTarget;
 
-    get exercise() {
-        return this.set.exerciseTargets[0].exercise;
+    constructor(
+        private set: RoutineSet,
+        public index = 0,
+        public repetition = 1,
+        public state: OngoingSetState = 'starting'
+    ) {
+        this.exerciseTarget = this.set.exerciseTargets[this.index];
     }
 
-    get target() {
-        return this.set.exerciseTargets[0].target;
+    get totalExercises() {
+        return this.set.exerciseTargets.length;
     }
 
-    get repetitions() {
+    get totalRepetitions() {
         return this.set.repetitions || 1;
     }
 
@@ -25,25 +30,51 @@ class OngoingSet {
         return this.set.restTime || 0;
     }
 
-    next() {
-        if (this.state == 'starting') {
-            return this.with({state: 'started'})
-        } else if (this.state == 'started' && this.currentSet < this.repetitions) {
-            return this.with({state: 'resting'})
-        } else if (this.state == 'started' && this.currentSet == this.repetitions) {
-            return this.with({state: 'completed'})
-        } else if (this.state == 'resting') {
-            return this.with({state: 'starting', currentSet: this.currentSet + 1})
-        } else {
+    get isLastExercise() {
+        return this.index + 1 === this.totalExercises;
+    }
+
+    get isLastSet() {
+        return this.repetition === this.totalRepetitions;
+    }
+
+    get isSuperset() {
+        return this.totalExercises > 1;
+    }
+
+    next(): OngoingSet {
+        if (this.state === 'starting') {
+            return this.with({state: 'started'});
+        }
+
+        if (this.state === 'resting') {
+            return this.with({repetition: this.repetition + 1, index: 0, state: 'starting'});
+        }
+
+        if (this.state === 'completed') {
             return this;
+        }
+
+        // state === 'started'
+        if (!this.isLastExercise) {
+            return this.with({index: this.index + 1, state: 'starting'});
+        } else if (!this.isLastSet) {
+            if (this.restTime > 0) {
+                return this.with({state: 'resting'});
+            } else {
+                return this.with({repetition: this.repetition + 1, index: 0, state: 'starting'});
+            }
+        } else {
+            return this.with({state: 'completed'});
         }
     }
 
-    private with(overrides: Partial<{state: OngoingSetState, currentSet: number}>): OngoingSet {
+    private with(overrides: Partial<{index: number, repetition: number, state: OngoingSetState}>): OngoingSet {
         return new OngoingSet(
             this.set,
+            overrides.index ?? this.index,
+            overrides.repetition ?? this.repetition,
             overrides.state ?? this.state,
-            overrides.currentSet ?? this.currentSet
         );
     }
 }
@@ -52,7 +83,7 @@ class OngoingSet {
     selector: 'ss-set-follow-along',
     imports: [ExerciseTargetPipe, Timer, FormatSecondsPipe],
     templateUrl: './set-follow-along.html',
-    styleUrls: ['../card-follow-along.scss', './set-follow-along.scss'],
+    styleUrls: ['./set-follow-along.scss'],
 })
 export class SetFollowAlong {
     set = input.required<RoutineSet>();
@@ -61,12 +92,12 @@ export class SetFollowAlong {
     protected ongoingSet = linkedSignal(() => new OngoingSet(this.set()));
 
     moveToNextState() {
-        const newOngoingSet = this.ongoingSet().next();
+        const next = this.ongoingSet().next();
 
-        if (newOngoingSet.state == 'completed') {
+        if (next.state === 'completed') {
             return this.completed.emit();
         }
 
-        this.ongoingSet.set(newOngoingSet);
+        this.ongoingSet.set(next);
     }
 }
