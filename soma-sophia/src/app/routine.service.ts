@@ -17,7 +17,11 @@ export type Exercise = {
 };
 
 export type RoutineSet = {
-    goals: {exercise: Exercise, target?: Repetition}[];
+    goals: {
+        exercise: Exercise,
+        target?: Repetition,
+        actual?: Repetition[]
+    }[];
     repetitions?: number;
     restTime?: number;
 }
@@ -145,10 +149,6 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
                         {
                             exercise: {name: 'compression work'},
                             target: {kind: 'static', holdTime: 30},
-                        },
-                        {
-                            exercise: {name: 'compression work'},
-                            target: {kind: 'dynamic', repetitions: 12},
                         }
                     ],
                     repetitions: 3,

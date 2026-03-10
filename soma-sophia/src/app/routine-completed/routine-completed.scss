@@ -1,0 +1,67 @@
+@use 'variables' as *;
+
+.phase-label {
+  margin: u(8) 0 u(3);
+  padding-bottom: u(2);
+  border-bottom: u(0.5) solid $color-border-subtle;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+.set-card {
+  background: $color-bg-surface;
+  border: u(0.5) solid $color-border-subtle;
+  border-radius: u(3);
+  padding: u(4) u(5);
+  margin-bottom: u(3);
+}
+
+.exercise-section {
+  padding-top: u(5);
+  border-top: u(0.5) solid $color-border-subtle;
+
+  &:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  h3 {
+    font-size: u(4);
+    margin-bottom: u(3);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: $font-monospace;
+    font-size: u(3.5);
+
+    th {
+      text-align: left;
+      font-size: u(2.5);
+      font-weight: $font-semi-bold;
+      color: $color-text-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding-bottom: u(1);
+    }
+
+    td {
+      padding: u(1) u(3) u(1) 0;
+
+      &:first-child {
+        color: $color-text-secondary;
+        font-size: u(3);
+        white-space: nowrap;
+        padding-right: u(5);
+      }
+
+      &.met {
+        color: $color-accent-primary;
+        font-weight: $font-bold;
+      }
+    }
+  }
+}

@@ -1,1 +1,43 @@
-<p>routine-completed works!</p>
+<header>
+    <h1>Workout Complete</h1>
+    <h2>{{ routine.name }}</h2>
+</header>
+<main>
+    @for (phase of routine.phases; track phase.name) {
+        @if (phaseHasTargets(phase)) {
+            <h3 class="phase-label">{{ phase.name }}</h3>
+            @for (set of phase.sets; track set) {
+                @let goals = goalsWithTargets(set);
+                @if (goals.length > 0) {
+                    <div class="set-card">
+                        @for (goal of goals; track goal.exercise.name) {
+                            <div class="exercise-section">
+                                <h3>{{ goal.exercise.name }}</h3>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Target</th>
+                                            <th>Actual</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (actual of goal.actual!; track $index) {
+                                            <tr>
+                                                <td>Round {{ $index + 1 }}</td>
+                                                <td>{{ goal.target | repetition }}</td>
+                                                <td [class.met]="metTarget(actual, goal.target)">
+                                                    {{ actual | repetition }}
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+        }
+    }
+</main>
