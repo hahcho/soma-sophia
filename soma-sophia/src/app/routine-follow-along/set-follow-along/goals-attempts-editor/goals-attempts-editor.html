@@ -1,0 +1,16 @@
+<h3>Adjust if needed</h3>
+
+@for (goalAttempts of goalsAttempts(); track $index) {
+    @let goal = goals()[$index];
+    <div class="goal-row">
+        <span class="exercise-name">{{ goal.exercise.name }}</span>
+        <div class="stepper">
+            <button class="secondary" type="button" (click)="editGoalAttempt($index, goalAttempts - 1)">−</button>
+            <input
+                type="number"
+                [value]="goalAttempts"
+                (input)="editGoalAttempt($index, $event.target.valueAsNumber)" />
+            <button class="secondary" type="button" (click)="editGoalAttempt($index, goalAttempts + 1)">+</button>
+        </div>
+    </div>
+}

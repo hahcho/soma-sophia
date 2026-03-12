@@ -83,5 +83,9 @@ button {
     background: $color-bg-surface-pop;
     color: $color-text-primary;
     border: u(0.25) solid $color-border-subtle;
+
+    &:active {
+      background: $color-border-subtle;
+    }
   }
 }

@@ -1,8 +1,9 @@
-import {Component, input, output, linkedSignal} from '@angular/core';
+import {Component, input, output, linkedSignal, computed} from '@angular/core';
 import {RoutineSet} from '../../routine.service';
 import {RepetitionPipe} from '../../repetition.pipe';
 import {FormatSecondsPipe} from '../../format-seconds.pipe';
 import {Timer} from './timer/timer';
+import {GoalsAttemptsEditor} from './goals-attempts-editor/goals-attempts-editor';
 
 type OngoingSetState = 'starting' | 'started' | 'resting' | 'completed';
 
@@ -42,20 +43,15 @@ class OngoingSet {
         return this.totalExercises > 1;
     }
 
-    next(): OngoingSet {
-        if (this.state === 'starting') {
-            return this.with({state: 'started'});
-        }
+    startRepetition(): OngoingSet {
+        return this.with({state: 'started'});
+    }
 
-        if (this.state === 'resting') {
-            return this.with({repetition: this.repetition + 1, index: 0, state: 'starting'});
-        }
+    finishRest(): OngoingSet {
+        return this.with({repetition: this.repetition + 1, index: 0, state: 'starting'});
+    }
 
-        if (this.state === 'completed') {
-            return this;
-        }
-
-        // state === 'started'
+    completeExercise(): OngoingSet {
         if (!this.isLastExercise) {
             return this.with({index: this.index + 1, state: 'starting'});
         } else if (!this.isLastSet) {
@@ -81,7 +77,7 @@ class OngoingSet {
 
 @Component({
     selector: 'ss-set-follow-along',
-    imports: [RepetitionPipe, Timer, FormatSecondsPipe],
+    imports: [RepetitionPipe, Timer, GoalsAttemptsEditor, FormatSecondsPipe],
     templateUrl: './set-follow-along.html',
     styleUrls: ['./set-follow-along.scss'],
 })
@@ -90,10 +86,31 @@ export class SetFollowAlong {
     completed = output<void>();
 
     protected ongoingSet = linkedSignal(() => new OngoingSet(this.set()));
+    protected goalsWithTargets = computed(() => this.set().goals.filter((goal) => goal.target));
+    protected goalsAttempts = linkedSignal(() =>
+        this.goalsWithTargets().map(goal =>
+            goal.target!.kind === 'static'
+                ? goal.target!.holdTime
+                : goal.target!.repetitions
+        )
+    );
 
-    moveToNextState() {
-        const next = this.ongoingSet().next();
+    protected startRepetition() {
+        const next = this.ongoingSet().startRepetition();
+        this.moveToNextState(next);
+    }
 
+    protected completeExercise() {
+        const next = this.ongoingSet().completeExercise();
+        this.moveToNextState(next);
+    }
+
+    protected finishRest() {
+        const next = this.ongoingSet().finishRest();
+        this.moveToNextState(next);
+    }
+
+    private moveToNextState(next: OngoingSet) {
         if (next.state === 'completed') {
             return this.completed.emit();
         }

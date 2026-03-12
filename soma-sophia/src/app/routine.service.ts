@@ -69,52 +69,6 @@ const HARDCODED_ROUTINE: {name: string; phases: Phase[]} = {
     name: 'Morning Routine',
     phases: [
         {
-            name: 'Warm up',
-            sets: [
-                {
-                    goals: [
-                        {exercise: {name: 'Neck circles'}},
-                        {exercise: {name: 'Cat/cow pose'}},
-                        {exercise: {name: 'Wrist opposite palm circles'}},
-                        {exercise: {name: 'Wrist top circles'}},
-                        {exercise: {name: 'Ankle sitting'}}
-                    ]
-                }
-            ]
-        },
-        {
-            name: 'Shoulder mobility',
-            sets: [
-                {
-                    goals: [
-                        {exercise: {name: 'Foam roll scapula and triceps'}},
-                        {
-                            exercise: {name: 'Elevated Straight arm push down'},
-                            target: {kind: 'static', holdTime: 120}
-                        },
-                        {
-                            exercise: {name: 'laying straight arm rows'},
-                            target: {kind: 'dynamic', repetitions: 10}
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            name: 'Hamstring/Pike',
-            sets: [
-                {
-                    goals: [
-                        {exercise: {name: 'Chair seated hip hinge'}},
-                        {exercise: {name: 'Downward facing dog'}},
-                        {exercise: {name: 'Standing pike to squat and back'}},
-                        {exercise: {name: 'Mckenzi push ups'}},
-                        {exercise: {name: 'Seated pike'}},
-                    ]
-                }
-            ]
-        },
-        {
             name: 'Strength',
             sets: [
                 {

@@ -1,0 +1,78 @@
+@use 'variables' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  background: $color-bg-surface;
+  border: u(0.25) solid $color-border-subtle;
+  border-radius: u(4);
+  overflow: hidden;
+}
+
+h3 {
+  font-family: $font-monospace;
+  color: $color-text-secondary;
+  text-align: center;
+  padding: u(4) u(5);
+}
+
+.goal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: u(4) u(5);
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: u(5);
+    right: u(5);
+    height: u(0.25);
+    background: $color-border-subtle;
+  }
+
+  .exercise-name {
+    flex: 1;
+    font-weight: $font-bold;
+    font-size: u(3.5);
+    margin-right: u(4);
+  }
+
+  .stepper {
+    display: flex;
+    align-items: center;
+    gap: u(2);
+
+    button {
+      width: u(9);
+      height: u(9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    input[type='number'] {
+      width: u(20);
+      padding: u(1.5) u(2);
+      font-family: $font-monospace;
+      font-size: u(4);
+      text-align: center;
+      border: u(0.5) solid $color-accent-primary;
+      border-radius: u(2);
+      background: $color-bg-surface;
+      -moz-appearance: textfield;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
