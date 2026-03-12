@@ -2,7 +2,7 @@ import {Component, input, output, linkedSignal} from '@angular/core';
 import {RoutineSet} from '../../routine.service';
 import {RepetitionPipe} from '../../repetition.pipe';
 import {FormatSecondsPipe} from '../../format-seconds.pipe';
-import {Timer} from '../timer/timer';
+import {Timer} from './timer/timer';
 
 type OngoingSetState = 'starting' | 'started' | 'resting' | 'completed';
 
