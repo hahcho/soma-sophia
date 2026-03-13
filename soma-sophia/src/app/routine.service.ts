@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 
 export type StaticHold = {
-    kind: 'static';
-    holdTime: number;
+    readonly kind: 'static';
+    readonly holdTime: number;
 }
 
 export type DynamicRepetitions = {
-    kind: 'dynamic';
-    repetitions: number;
+    readonly kind: 'dynamic';
+    readonly repetitions: number;
 }
 
 export type Repetition = StaticHold | DynamicRepetitions;

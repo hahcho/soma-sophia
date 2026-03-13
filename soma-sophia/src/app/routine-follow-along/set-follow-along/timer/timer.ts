@@ -1,4 +1,4 @@
-import {Component, OnDestroy, signal, input, effect, output} from '@angular/core';
+import {Component, OnDestroy, model, input, effect, output} from '@angular/core';
 import {StopWatchFormat} from './stopwatch-format.pipe';
 
 
@@ -38,12 +38,14 @@ export class Timer implements OnDestroy {
     label = input('');
 
     finished = output<void>();
+    time = model<number>(0);
 
-    protected time = signal(0);
     private ticker: Ticker | null = null;
 
     constructor() {
         effect(() => {
+            this.time.set(0);
+
             if (this.running()) {
                 this.ticker = new Ticker(this.limit() * 1000, (diffBetweenTicks) => {
                     const diffBetweenTicksSeconds = Math.floor(diffBetweenTicks / 1000);

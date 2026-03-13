@@ -1,11 +1,56 @@
-import {Component, input, output, linkedSignal, computed} from '@angular/core';
-import {RoutineSet} from '../../routine.service';
+import {Component, input, output, signal, linkedSignal} from '@angular/core';
+import {RoutineSet, Repetition} from '../../routine.service';
 import {RepetitionPipe} from '../../repetition.pipe';
 import {FormatSecondsPipe} from '../../format-seconds.pipe';
 import {Timer} from './timer/timer';
 import {GoalsAttemptsEditor} from './goals-attempts-editor/goals-attempts-editor';
 
 type OngoingSetState = 'starting' | 'started' | 'resting' | 'completed';
+
+class GoalsAttemptsLogger {
+    private goalsAttempts: {[key: number]: {[key: number]: Repetition}} = {};
+
+    logAttempt(ongoingSet: OngoingSet, attemptTime: number) {
+        const goal = ongoingSet.goal;
+
+        if (!goal.target) {return;}
+
+        const repetition = ongoingSet.repetition;
+        const goalIndex = ongoingSet.index;
+
+        let attempt: Repetition;
+        if (goal.target.kind === 'static') {
+            attempt = {kind: 'static', holdTime: attemptTime}
+        } else {
+            attempt = goal.target;
+        }
+
+        this.goalsAttempts[repetition] ||= {};
+        this.goalsAttempts[repetition][goalIndex] = attempt;
+    }
+
+    getGoalsAttemptAsNumbers(repetition: number) {
+        const goalsAttempt = this.goalsAttempts[repetition];
+        const goalsAttemptAsNumbers: number[] = [];
+        for (const index in goalsAttempt) {
+            const rep = goalsAttempt[index];
+            goalsAttemptAsNumbers[index] = rep.kind === 'static' ? rep.holdTime : rep.repetitions;
+        }
+        return goalsAttemptAsNumbers;
+    }
+
+    updateAttempt(repetition: number, goalsAttemptAsNumbers: number[]) {
+        const goalsAttempt = this.goalsAttempts[repetition];
+        for (let i = 0; i < goalsAttemptAsNumbers.length; i++) {
+            if (goalsAttempt[i].kind === 'static') {
+                goalsAttempt[i] = {kind: 'static', holdTime: goalsAttemptAsNumbers[i]};
+            } else {
+                goalsAttempt[i] = {kind: 'dynamic', repetitions: goalsAttemptAsNumbers[i]};
+            }
+        }
+    }
+}
+
 
 class OngoingSet {
     public goal;
@@ -14,9 +59,13 @@ class OngoingSet {
         private set: RoutineSet,
         public index = 0,
         public repetition = 1,
-        public state: OngoingSetState = 'starting'
+        public state: OngoingSetState = 'starting',
     ) {
         this.goal = this.set.goals[this.index];
+    }
+
+    get goalsWithTargets() {
+        return this.set.goals.filter((goal) => goal.target);
     }
 
     get totalExercises() {
@@ -43,25 +92,30 @@ class OngoingSet {
         return this.totalExercises > 1;
     }
 
-    startRepetition(): OngoingSet {
+    startExercise(): OngoingSet {
         return this.with({state: 'started'});
     }
 
-    finishRest(): OngoingSet {
-        return this.with({repetition: this.repetition + 1, index: 0, state: 'starting'});
-    }
-
     completeExercise(): OngoingSet {
-        if (!this.isLastExercise) {
-            return this.with({index: this.index + 1, state: 'starting'});
-        } else if (!this.isLastSet) {
+        if (this.isLastExercise) {
             if (this.restTime > 0) {
                 return this.with({state: 'resting'});
+            } else if (this.isLastSet) {
+                return this.with({state: 'completed'});
             } else {
                 return this.with({repetition: this.repetition + 1, index: 0, state: 'starting'});
             }
         } else {
+            return this.with({index: this.index + 1, state: 'starting'});
+        }
+
+    }
+
+    finishRest(): OngoingSet {
+        if (this.isLastSet) {
             return this.with({state: 'completed'});
+        } else {
+            return this.with({repetition: this.repetition + 1, index: 0, state: 'starting'});
         }
     }
 
@@ -70,7 +124,7 @@ class OngoingSet {
             this.set,
             overrides.index ?? this.index,
             overrides.repetition ?? this.repetition,
-            overrides.state ?? this.state,
+            overrides.state ?? this.state
         );
     }
 }
@@ -86,32 +140,38 @@ export class SetFollowAlong {
     completed = output<void>();
 
     protected ongoingSet = linkedSignal(() => new OngoingSet(this.set()));
-    protected goalsWithTargets = computed(() => this.set().goals.filter((goal) => goal.target));
-    protected goalsAttempts = linkedSignal(() =>
-        this.goalsWithTargets().map(goal =>
-            goal.target!.kind === 'static'
-                ? goal.target!.holdTime
-                : goal.target!.repetitions
-        )
-    );
+    protected timerTime = signal(0);
+    protected editedGoalsAttemp = signal<number[]>([]);
 
-    protected startRepetition() {
-        const next = this.ongoingSet().startRepetition();
+    private goalsAttemptsLogger = new GoalsAttemptsLogger();
+
+    protected startExercise() {
+        const next = this.ongoingSet().startExercise();
         this.moveToNextState(next);
     }
 
     protected completeExercise() {
+        this.goalsAttemptsLogger.logAttempt(this.ongoingSet(), this.timerTime())
         const next = this.ongoingSet().completeExercise();
+        if (next.state === 'resting') {
+            const repetition = this.ongoingSet().repetition;
+            const attemptsAsNumbers = this.goalsAttemptsLogger.getGoalsAttemptAsNumbers(repetition);
+            this.editedGoalsAttemp.set(attemptsAsNumbers);
+        }
         this.moveToNextState(next);
     }
 
     protected finishRest() {
+        const repetition = this.ongoingSet().repetition;
+        this.goalsAttemptsLogger.updateAttempt(repetition, this.editedGoalsAttemp());
         const next = this.ongoingSet().finishRest();
         this.moveToNextState(next);
     }
 
     private moveToNextState(next: OngoingSet) {
         if (next.state === 'completed') {
+            console.log(this.goalsAttemptsLogger);
+            this.goalsAttemptsLogger = new GoalsAttemptsLogger();
             return this.completed.emit();
         }
 

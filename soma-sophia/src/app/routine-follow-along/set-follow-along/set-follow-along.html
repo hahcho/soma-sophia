@@ -21,22 +21,24 @@
 
 @switch (ongoingSet().state) {
     @case ('starting') {
-        <ss-timer label="Ready to start" [running]="false"></ss-timer>
-        <button class="primary" (click)="startRepetition()">Start</button>
+        <ss-timer label="Ready to start" [running]="false" [(time)]="timerTime"></ss-timer>
+        <button class="primary" (click)="startExercise()">Start</button>
     }
     @case ('started') {
-        <ss-timer label="Started" [running]="true"></ss-timer>
+        <ss-timer label="Started" [running]="true" [(time)]="timerTime"></ss-timer>
         <button class="secondary" (click)="completeExercise()">Complete</button>
     }
     @case ('resting') {
         <ss-timer class="warning"
                   [label]="'Rest (' + (ongoingSet().restTime | formatSeconds) + ' target)'"
                   [running]="true"
+                  [(time)]="timerTime"
                   [limit]="ongoingSet().restTime"
                   (finished)="finishRest()">
         </ss-timer>
-        <ss-goals-attempts-editor [goals]="goalsWithTargets()" [(goalsAttempts)]="goalsAttempts" />
+        <ss-goals-attempts-editor
+            [goals]="ongoingSet().goalsWithTargets"
+            [(goalsAttempts)]="editedGoalsAttemp" />
         <button class="secondary" (click)="finishRest()">Skip Rest</button>
     }
 }
-
