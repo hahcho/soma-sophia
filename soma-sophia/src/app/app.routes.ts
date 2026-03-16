@@ -21,7 +21,7 @@ export const routes: Routes = [
         component: RoutineCompleted,
         resolve: {
             routine: () => {
-                return inject(RoutineService).getCompletedRoutine();
+                return inject(RoutineService).getLastCompletedRoutine();
             }
         },
         title: 'Routine Completed'

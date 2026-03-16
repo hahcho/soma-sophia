@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {db, type CompletedRoutine} from './database';
 
 export type StaticHold = {
     readonly kind: 'static';
@@ -119,14 +120,15 @@ export class RoutineService {
         return new Routine(HARDCODED_ROUTINE);
     }
 
-    saveCompletedRoutine(routine: Routine) {
-        const rawJSON = JSON.stringify(routine);
-        localStorage.setItem('completed-routine', rawJSON);
+    saveCompletedRoutine(routine: Routine): Promise<number | undefined> {
+        return db.completedRoutines.add({
+            name: routine.name,
+            phases: routine.phases,
+            completedAt: new Date(),
+        });
     }
 
-    getCompletedRoutine() {
-        const rawJSON = localStorage.getItem('completed-routine') || '';
-        const routine: Routine = JSON.parse(rawJSON);
-        return routine;
+    getLastCompletedRoutine(): Promise<CompletedRoutine | undefined> {
+        return db.completedRoutines.orderBy('completedAt').last();
     }
 }
