@@ -118,4 +118,15 @@ export class RoutineService {
     getRoutine(): Routine {
         return new Routine(HARDCODED_ROUTINE);
     }
+
+    saveCompletedRoutine(routine: Routine) {
+        const rawJSON = JSON.stringify(routine);
+        localStorage.setItem('completed-routine', rawJSON);
+    }
+
+    getCompletedRoutine() {
+        const rawJSON = localStorage.getItem('completed-routine') || '';
+        const routine: Routine = JSON.parse(rawJSON);
+        return routine;
+    }
 }

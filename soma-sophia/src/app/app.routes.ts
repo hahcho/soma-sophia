@@ -1,7 +1,9 @@
+import {inject} from '@angular/core';
 import {Routes} from '@angular/router';
 import {Dashboard} from './dashboard/dashboard'
 import {RoutineFollowAlong} from './routine-follow-along/routine-follow-along'
 import {RoutineCompleted} from './routine-completed/routine-completed';
+import {RoutineService} from './routine.service';
 
 export const routes: Routes = [
     {
@@ -17,6 +19,11 @@ export const routes: Routes = [
     {
         path: 'completed',
         component: RoutineCompleted,
+        resolve: {
+            routine: () => {
+                return inject(RoutineService).getCompletedRoutine();
+            }
+        },
         title: 'Routine Completed'
     }
 ];

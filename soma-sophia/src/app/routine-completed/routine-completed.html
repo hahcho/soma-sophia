@@ -1,9 +1,9 @@
 <header>
     <h1>Workout Complete</h1>
-    <h2>{{ routine.name }}</h2>
+    <h2>{{ routine().name }}</h2>
 </header>
 <main>
-    @for (phase of routine.phases; track phase.name) {
+    @for (phase of routine().phases; track phase.name) {
         @if (phaseHasTargets(phase)) {
             <h3 class="phase-label">{{ phase.name }}</h3>
             @for (set of phase.sets; track set) {

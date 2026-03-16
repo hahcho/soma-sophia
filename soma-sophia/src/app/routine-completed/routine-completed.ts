@@ -1,5 +1,5 @@
-import {Component, inject} from '@angular/core';
-import {RoutineService, Repetition, Phase, RoutineSet} from '../routine.service';
+import {Component, input} from '@angular/core';
+import {Routine, Repetition, Phase, RoutineSet} from '../routine.service';
 import {RepetitionPipe} from '../repetition.pipe';
 
 
@@ -10,24 +10,7 @@ import {RepetitionPipe} from '../repetition.pipe';
     styleUrl: './routine-completed.scss',
 })
 export class RoutineCompleted {
-    protected readonly routine = inject(RoutineService).getRoutine();
-
-    constructor() {
-        for (let phase of this.routine.phases) {
-            for (let set of phase.sets) {
-                for (let goal of set.goals) {
-                    if (!goal.target) {continue;}
-
-                    const count = set.repetitions || 1;
-                    if (goal.target.kind == 'static') {
-                        goal.actual = new Array(count).fill({kind: 'static', holdTime: 10});
-                    } else {
-                        goal.actual = new Array(count).fill({kind: 'dynamic', repetitions: 10});
-                    }
-                }
-            }
-        }
-    }
+    routine = input.required<Routine>();
 
     protected phaseHasTargets(phase: Phase): boolean {
         return phase.sets.some(set => set.goals.some(g => g.target));

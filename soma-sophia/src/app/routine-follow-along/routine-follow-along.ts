@@ -1,5 +1,5 @@
-import {Component, inject, signal, output, linkedSignal} from '@angular/core';
-import {RoutineService, Routine} from '../routine.service';
+import {Component, inject, signal, linkedSignal} from '@angular/core';
+import {RoutineService, Routine, RoutineSet} from '../routine.service';
 import {SetFollowAlong} from './set-follow-along/set-follow-along';
 import {ProgressBar} from './progress-bar/progress-bar';
 import {Router} from '@angular/router';
@@ -57,13 +57,23 @@ class OngoingRoutine {
 export class RoutineFollowAlong {
     private readonly routineService = inject(RoutineService);
     private readonly router = inject(Router);
+
     protected readonly routine = signal(this.routineService.getRoutine());
     protected readonly ongoingRoutine = linkedSignal(() => new OngoingRoutine(this.routine()));
+    protected readonly completedRoutine = linkedSignal<Routine>(() => new Routine({
+        name: this.routine().name,
+        phases: this.routine().phases.map((phase) => ({name: phase.name, sets: []})),
+    }));
 
-    moveToNextSet() {
+    moveToNextSet(completedSet: RoutineSet) {
+        const phaseIndex = this.ongoingRoutine().phaseIndex;
+        const phase = this.completedRoutine().phases[phaseIndex];
+        phase.sets.push(completedSet);
+
         const newOngoingRoutine = this.ongoingRoutine().next();
 
         if (newOngoingRoutine.completed) {
+            this.routineService.saveCompletedRoutine(this.completedRoutine());
             this.router.navigate(['/completed']);
             return;
         }

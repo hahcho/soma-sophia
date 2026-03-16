@@ -49,6 +49,27 @@ class GoalsAttemptsLogger {
             }
         }
     }
+
+    getCompletedRoutineSet(set: RoutineSet) {
+        const completedGoals: RoutineSet['goals'] = [];
+        const totalRepetitions = set.repetitions || 1;
+
+        for (let repetition = 1; repetition <= totalRepetitions; repetition++) {
+            const goalsAttempt = this.goalsAttempts[repetition];
+            for (const goalIndex in goalsAttempt) {
+                if (!completedGoals[goalIndex]) {
+                    completedGoals[goalIndex] = {...set.goals[goalIndex]};
+                    completedGoals[goalIndex].actual = [];
+                }
+                completedGoals[goalIndex].actual!.push(goalsAttempt[goalIndex]);
+            }
+        }
+
+        const completedSet = {...set};
+        completedSet.goals = completedGoals;
+
+        return completedSet;
+    }
 }
 
 
@@ -137,7 +158,7 @@ class OngoingSet {
 })
 export class SetFollowAlong {
     set = input.required<RoutineSet>();
-    completed = output<void>();
+    completed = output<RoutineSet>();
 
     protected ongoingSet = linkedSignal(() => new OngoingSet(this.set()));
     protected timerTime = signal(0);
@@ -170,9 +191,9 @@ export class SetFollowAlong {
 
     private moveToNextState(next: OngoingSet) {
         if (next.state === 'completed') {
-            console.log(this.goalsAttemptsLogger);
+            const completedSet = this.goalsAttemptsLogger.getCompletedRoutineSet(this.set());
             this.goalsAttemptsLogger = new GoalsAttemptsLogger();
-            return this.completed.emit();
+            return this.completed.emit(completedSet);
         }
 
         this.ongoingSet.set(next);
