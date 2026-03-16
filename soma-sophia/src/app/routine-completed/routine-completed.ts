@@ -1,4 +1,5 @@
 import {Component, input} from '@angular/core';
+import {DatePipe, DecimalPipe} from '@angular/common';
 import {Repetition, Phase, RoutineSet} from '../routine.service';
 import {CompletedRoutine} from '../database';
 import {RepetitionPipe} from '../repetition.pipe';
@@ -6,7 +7,7 @@ import {RepetitionPipe} from '../repetition.pipe';
 
 @Component({
     selector: 'ss-routine-completed',
-    imports: [RepetitionPipe],
+    imports: [RepetitionPipe, DatePipe, DecimalPipe],
     templateUrl: './routine-completed.html',
     styleUrl: './routine-completed.scss',
 })

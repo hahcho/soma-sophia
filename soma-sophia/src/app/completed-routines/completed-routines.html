@@ -1,5 +1,10 @@
 <header>
     <h1>Completed Routines</h1>
+    @if (routines().length > 0) {
+        <ul class="details">
+            <li>{{ routines().length }} sessions</li>
+        </ul>
+    }
 </header>
 <main>
     @if (routines().length === 0) {

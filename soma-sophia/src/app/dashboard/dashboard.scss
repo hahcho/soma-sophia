@@ -1,30 +1,5 @@
 @use 'variables' as *;
 
-header {
-  h1 {
-    background: linear-gradient(135deg, $color-accent-primary 0%, $color-accent-secondary 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: u(1.5);
-  }
-
-  ul.details {
-    display: flex;
-    gap: u(1.5);
-
-    font-family: $font-monospace;
-    font-size: u(3);
-    text-transform: uppercase;
-    color: $color-text-secondary;
-
-    li::before {
-      content: '•';
-      color: $color-accent-primary;
-    }
-  }
-}
-
 .phase-number {
   font-family: $font-monospace;
   font-size: u(3);
@@ -42,10 +17,10 @@ h2.phase-name {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -3px;
+    bottom: u(-0.75);
     width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, #06f 0%, transparent 100%);
+    height: u(0.5);
+    background: linear-gradient(90deg, $color-accent-primary 0%, transparent 100%);
   }
 }
 
