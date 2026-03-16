@@ -128,7 +128,11 @@ export class RoutineService {
         });
     }
 
-    getLastCompletedRoutine(): Promise<CompletedRoutine | undefined> {
-        return db.completedRoutines.orderBy('completedAt').last();
+    getCompletedRoutineById(id: number): Promise<CompletedRoutine | undefined> {
+        return db.completedRoutines.get(id);
+    }
+
+    getAllCompletedRoutines(): Promise<CompletedRoutine[]> {
+        return db.completedRoutines.orderBy('completedAt').reverse().toArray();
     }
 }

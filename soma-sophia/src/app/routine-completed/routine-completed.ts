@@ -1,5 +1,6 @@
 import {Component, input} from '@angular/core';
-import {Routine, Repetition, Phase, RoutineSet} from '../routine.service';
+import {Repetition, Phase, RoutineSet} from '../routine.service';
+import {CompletedRoutine} from '../database';
 import {RepetitionPipe} from '../repetition.pipe';
 
 
@@ -10,7 +11,7 @@ import {RepetitionPipe} from '../repetition.pipe';
     styleUrl: './routine-completed.scss',
 })
 export class RoutineCompleted {
-    routine = input.required<Routine>();
+    routine = input.required<CompletedRoutine>();
 
     protected phaseHasTargets(phase: Phase): boolean {
         return phase.sets.some(set => set.goals.some(g => g.target));

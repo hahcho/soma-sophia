@@ -65,7 +65,7 @@ export class RoutineFollowAlong {
         phases: this.routine().phases.map((phase) => ({name: phase.name, sets: []})),
     }));
 
-    moveToNextSet(completedSet: RoutineSet) {
+    async moveToNextSet(completedSet: RoutineSet) {
         const phaseIndex = this.ongoingRoutine().phaseIndex;
         const phase = this.completedRoutine().phases[phaseIndex];
         phase.sets.push(completedSet);
@@ -73,8 +73,8 @@ export class RoutineFollowAlong {
         const newOngoingRoutine = this.ongoingRoutine().next();
 
         if (newOngoingRoutine.completed) {
-            this.routineService.saveCompletedRoutine(this.completedRoutine());
-            this.router.navigate(['/completed']);
+            const id = await this.routineService.saveCompletedRoutine(this.completedRoutine());
+            this.router.navigate(['/completed', id]);
             return;
         }
 

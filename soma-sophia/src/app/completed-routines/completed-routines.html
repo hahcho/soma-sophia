@@ -1,0 +1,19 @@
+<header>
+    <h1>Completed Routines</h1>
+</header>
+<main>
+    @if (routines().length === 0) {
+        <p class="empty">No completed routines yet.</p>
+    } @else {
+        <ul>
+            @for (routine of routines(); track routine.id) {
+                <li>
+                    <a [routerLink]="['/completed', routine.id]">
+                        <b>{{ routine.name }}</b>
+                        <span class="date">{{ routine.completedAt | date:'MMM d, HH:mm' }}</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+</main>
