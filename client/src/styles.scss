@@ -64,7 +64,8 @@ header {
   z-index: 100;
 
   h1 {
-    background: linear-gradient(135deg, $color-accent-primary 0%, $color-accent-secondary 100%);
+    background-image: linear-gradient(135deg, $color-accent-primary 0%, $color-accent-secondary 100%);
+    /* stylelint-disable-next-line property-no-vendor-prefix */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

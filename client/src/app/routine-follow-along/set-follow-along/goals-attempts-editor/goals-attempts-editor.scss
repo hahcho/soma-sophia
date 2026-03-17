@@ -63,11 +63,11 @@ h3 {
       border: u(0.5) solid $color-accent-primary;
       border-radius: u(2);
       background: $color-bg-surface;
-      -moz-appearance: textfield;
+      appearance: textfield;
 
       &::-webkit-outer-spin-button,
       &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
+        appearance: none;
       }
 
       &:focus {
