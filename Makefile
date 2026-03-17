@@ -1,6 +1,6 @@
 DOCKER_EXEC = docker compose exec angular
 
-.PHONY: start build start-client start-server lint-client lint-client-fix lint-server lint-server-fix
+.PHONY: start build start-client start-server lint-client lint-client-fix lint-server lint-server-fix typecheck-server
 
 start-client:
 	cd client && npm start -- --host 0.0.0.0
@@ -19,6 +19,9 @@ lint-server:
 
 lint-server-fix:
 	cd server && uv run ruff check --fix . && uv run ruff format .
+
+typecheck-server:
+	cd server && uv run pyright .
 
 start:
 	docker compose up
