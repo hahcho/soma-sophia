@@ -1,9 +1,12 @@
 DOCKER_EXEC = docker compose exec angular
 
-.PHONY: lint lint-fix start build
+.PHONY: lint lint-fix start build start-client start-server
 
-start-node:
+start-client:
 	cd client && npm start -- --host 0.0.0.0
+
+start-server:
+	cd server && uv run fastapi dev main.py
 
 lint:
 	$(DOCKER_EXEC) npm run lint:scss
