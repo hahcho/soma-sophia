@@ -3,7 +3,7 @@ services:
     build: .
     user: "${UID:-1000}:${GID:-1000}"
     volumes:
-      - ./soma-sophia:/app
+      - ./client:/app
       - /app/node_modules # Keep node_modules inside container
     environment:
       - NODE_ENV=development
