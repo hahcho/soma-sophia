@@ -68,7 +68,13 @@ nav {
   font-weight: $font-extra-bold;
   font-size: u(5);
   color: $color-accent-primary;
-  margin: 0 0 u(8);
+  margin: 0 0 u(1);
+}
+
+.username {
+  font-size: u(3.5);
+  color: $color-text-secondary;
+  margin: 0 0 u(6);
 }
 
 ul {

@@ -8,6 +8,9 @@
 
 <nav [class.open]="isOpen()">
     <p class="app-name">Soma Sophia</p>
+    @if (auth.user(); as user) {
+        <p class="username">{{ user.name }}</p>
+    }
     @if (auth.isLoggedIn()) {
         <ul>
             <li>
