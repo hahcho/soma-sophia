@@ -1,5 +1,7 @@
-import {Component, signal} from '@angular/core';
-import {RouterLink, RouterLinkActive} from '@angular/router';
+import {Component, inject, signal} from '@angular/core';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
+
+import {AuthService} from '../auth.service';
 
 @Component({
     selector: 'ss-side-menu',
@@ -9,6 +11,8 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
 })
 export class SideMenu {
     protected isOpen = signal(false);
+    protected readonly auth = inject(AuthService);
+    private readonly router = inject(Router);
 
     protected toggle() {
         this.isOpen.update((v) => !v);
@@ -16,5 +20,11 @@ export class SideMenu {
 
     protected close() {
         this.isOpen.set(false);
+    }
+
+    protected logout() {
+        this.close();
+        this.auth.logout();
+        void this.router.navigate(['/login']);
     }
 }

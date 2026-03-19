@@ -1,7 +1,8 @@
 client/.angular/cache
+client/dist
 client/node_modules
 
-server/__pycache__
+server/**/__pycache__
 server/.venv
 
 # Docker environment variables (user-specific)

@@ -8,22 +8,25 @@
 
 <nav [class.open]="isOpen()">
     <p class="app-name">Soma Sophia</p>
-    <ul>
-        <li>
-            <a routerLink="/"
-               routerLinkActive="active"
-               [routerLinkActiveOptions]="{exact: true}"
-               (click)="close()">Dashboard</a>
-        </li>
-        <li>
-            <a routerLink="/follow-along"
-               routerLinkActive="active"
-               (click)="close()">Follow Along</a>
-        </li>
-        <li>
-            <a routerLink="/completed"
-               routerLinkActive="active"
-               (click)="close()">Completed</a>
-        </li>
-    </ul>
+    @if (auth.isLoggedIn()) {
+        <ul>
+            <li>
+                <a routerLink="/"
+                   routerLinkActive="active"
+                   [routerLinkActiveOptions]="{exact: true}"
+                   (click)="close()">Dashboard</a>
+            </li>
+            <li>
+                <a routerLink="/follow-along"
+                   routerLinkActive="active"
+                   (click)="close()">Follow Along</a>
+            </li>
+            <li>
+                <a routerLink="/completed"
+                   routerLinkActive="active"
+                   (click)="close()">Completed</a>
+            </li>
+        </ul>
+        <button class="secondary" (click)="logout()">Sign out</button>
+    }
 </nav>

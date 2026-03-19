@@ -1,12 +1,15 @@
 DOCKER_EXEC = docker compose exec angular
 
-.PHONY: start build start-client start-server lint-client lint-client-fix lint-server lint-server-fix typecheck-server lint lint-fix
+.PHONY: start build start-client start-server start-database lint-client lint-client-fix lint-server lint-server-fix typecheck-server lint lint-fix
 
 start-client:
 	cd client && npm start -- --host 0.0.0.0
 
 start-server:
 	cd server && uv run fastapi dev main.py
+
+start-database:
+	docker compose up postgres
 
 lint-client:
 	cd client && npm run lint:scss

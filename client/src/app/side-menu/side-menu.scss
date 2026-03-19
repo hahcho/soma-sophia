@@ -48,6 +48,7 @@ nav {
   top: 0;
   left: 0;
   height: 100%;
+  box-sizing: border-box;
   width: $nav-width;
   background: $color-bg-surface;
   border-right: u(0.25) solid $color-border-subtle;
@@ -74,6 +75,7 @@ ul {
   display: flex;
   flex-direction: column;
   gap: u(2);
+  flex: 1;
 }
 
 a {

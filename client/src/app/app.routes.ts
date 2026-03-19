@@ -4,18 +4,32 @@ import {Dashboard} from './dashboard/dashboard'
 import {RoutineFollowAlong} from './routine-follow-along/routine-follow-along'
 import {RoutineCompleted} from './routine-completed/routine-completed';
 import {CompletedRoutines} from './completed-routines/completed-routines';
+import {Login} from './login/login';
+import {AuthCallback} from './auth-callback/auth-callback';
 import {RoutineService} from './routine.service';
+import {authGuard} from './auth.guard';
 
 export const routes: Routes = [
     {
+        path: 'login',
+        component: Login,
+        title: 'Sign In'
+    },
+    {
+        path: 'auth/callback',
+        component: AuthCallback,
+    },
+    {
         path: '',
         component: Dashboard,
-        title: 'Dashbord'
+        title: 'Dashboard',
+        canActivate: [authGuard],
     },
     {
         path: 'follow-along',
         component: RoutineFollowAlong,
-        title: 'Routine Follow Along'
+        title: 'Routine Follow Along',
+        canActivate: [authGuard],
     },
     {
         path: 'completed',
@@ -23,7 +37,8 @@ export const routes: Routes = [
         resolve: {
             routines: () => inject(RoutineService).getAllCompletedRoutines(),
         },
-        title: 'Completed Routines'
+        title: 'Completed Routines',
+        canActivate: [authGuard],
     },
     {
         path: 'completed/:id',
@@ -34,6 +49,7 @@ export const routes: Routes = [
                 return inject(RoutineService).getCompletedRoutineById(id);
             }
         },
-        title: 'Routine Completed'
+        title: 'Routine Completed',
+        canActivate: [authGuard],
     }
 ];

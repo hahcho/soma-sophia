@@ -1,0 +1,83 @@
+@use 'variables' as *;
+
+.login-page {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-bg;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: u(6);
+    padding: u(12) u(10);
+    background: $color-bg-surface;
+    border: u(0.25) solid $color-border-subtle;
+    border-radius: u(5);
+    width: min(u(100), 90vw);
+
+    h1 {
+        font-size: u(9);
+        font-weight: $font-extra-bold;
+        background-image: linear-gradient(135deg, $color-accent-primary 0%, $color-accent-secondary 100%);
+        /* stylelint-disable-next-line property-no-vendor-prefix */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+}
+
+.tagline {
+    font-size: u(4);
+    color: $color-text-secondary;
+    margin: u(-4) 0 0;
+}
+
+.dev-btn {
+    padding: u(3) u(6);
+    background: $color-bg-surface-pop;
+    border: u(0.25) dashed $color-border-subtle;
+    border-radius: u(3);
+    font-size: u(3.5);
+    font-weight: $font-semi-bold;
+    color: $color-text-secondary;
+    cursor: pointer;
+    width: 100%;
+
+    &:hover {
+        background: $color-bg-surface-pop-1;
+        color: $color-text-primary;
+    }
+}
+
+.google-btn {
+    display: flex;
+    align-items: center;
+    gap: u(3);
+    padding: u(4) u(6);
+    background: $color-bg-surface;
+    border: u(0.25) solid $color-border-subtle;
+    border-radius: u(3);
+    font-size: u(4);
+    font-weight: $font-semi-bold;
+    color: $color-text-primary;
+    cursor: pointer;
+    transition: background 0.15s ease;
+
+    &:hover {
+        background: $color-bg-surface-pop;
+    }
+
+    &:active {
+        background: $color-border-subtle;
+    }
+
+    svg {
+        width: u(5);
+        height: u(5);
+        flex-shrink: 0;
+    }
+}

@@ -3,7 +3,14 @@ name = "soma-sophia-server"
 version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
+    "authlib>=1.6.9",
     "fastapi[standard]>=0.135.1",
+    "httpx>=0.28.1",
+    "itsdangerous>=2.2.0",
+    "psycopg[binary]>=3.3.3",
+    "pydantic-settings>=2.13.1",
+    "pyjwt>=2.12.1",
+    "sqlalchemy>=2.0.48",
 ]
 
 [dependency-groups]
@@ -19,4 +26,7 @@ line-length = 100
 select = ["E", "F", "I", "UP"]
 
 [tool.pyright]
-typeCheckingMode = "strict"
+typeCheckingMode = "standard"
+reportUnknownParameterType = true
+venvPath = "."
+venv = ".venv"

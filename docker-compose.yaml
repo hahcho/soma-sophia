@@ -18,4 +18,26 @@ services:
       - ./server:/app
     ports:
       - 8000:8000
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql+psycopg://soma:soma@postgres:5432/soma
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-prod}
+      - FRONTEND_URL=http://localhost:4200
     command: uv run fastapi dev main.py --host 0.0.0.0
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      - POSTGRES_USER=soma
+      - POSTGRES_PASSWORD=soma
+      - POSTGRES_DB=soma
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
