@@ -1,15 +1,15 @@
 services:
   angular:
-    build: ./client
-    user: "${UID:-1000}:${GID:-1000}"
+    image: node:24.13.0-bookworm
+    working_dir: /app
+    user: "1000:1000"
     volumes:
       - ./client:/app
-      - /app/node_modules # Keep node_modules inside container
     environment:
       - NODE_ENV=development
     ports:
       - 4200:4200
-    command: npm start -- --host 0.0.0.0
+    command: sh -c "npm install && npm start -- --host 0.0.0.0"
 
   server:
     build:
@@ -27,6 +27,7 @@ services:
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-prod}
       - FRONTEND_URL=http://localhost:4200
+      - DEBUG=true
 
   postgres:
     image: postgres:17-alpine

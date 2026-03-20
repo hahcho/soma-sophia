@@ -1,6 +1,7 @@
 FROM python:3.14-slim AS base
 WORKDIR /app
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+RUN apt-get update && apt-get install -y libatomic1 && rm -rf /var/lib/apt/lists/*
 
 # ---- dev ----
 # Code and .venv are mounted via docker-compose
@@ -8,7 +9,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 FROM base AS dev
 ENV VIRTUAL_ENV=/app/.venv
 ENV PATH="/app/.venv/bin:$PATH"
-CMD ["sh", "-c", "uv pip install . && uvicorn main:app --host 0.0.0.0 --reload"]
+CMD ["sh", "-c", "uv sync && uv run fastapi dev main.py --host 0.0.0.0"]
 
 # ---- prod ----
 FROM base AS prod
