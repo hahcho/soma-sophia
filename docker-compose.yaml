@@ -1,6 +1,6 @@
 services:
   angular:
-    build: .
+    build: ./client
     user: "${UID:-1000}:${GID:-1000}"
     volumes:
       - ./client:/app
@@ -12,8 +12,9 @@ services:
     command: npm start -- --host 0.0.0.0
 
   server:
-    image: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
-    working_dir: /app
+    build:
+      context: ./server
+      target: dev
     volumes:
       - ./server:/app
     ports:
@@ -26,7 +27,6 @@ services:
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-prod}
       - FRONTEND_URL=http://localhost:4200
-    command: uv run fastapi dev main.py --host 0.0.0.0
 
   postgres:
     image: postgres:17-alpine
