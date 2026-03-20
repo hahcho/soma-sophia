@@ -14,6 +14,6 @@ CMD ["sh", "-c", "uv sync && uv run fastapi dev main.py --host 0.0.0.0"]
 # ---- prod ----
 FROM base AS prod
 COPY pyproject.toml .
-RUN uv pip install --system --no-dev .
+RUN uv pip install --system .
 COPY . .
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--proxy-headers"]
